@@ -4,10 +4,13 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
+import swervelib.SwerveInputStream;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -19,17 +22,27 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public static final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
+	public static final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
+			() -> driverController.getLeftY(), // -1 on blue, 1 on red
+			() -> driverController.getLeftX())
+			.withControllerRotationAxis(() -> driverController.getRightX() * -1)
+			.deadband(ControllerConstants.DEADBAND)
+			.scaleTranslation(0.8)
+			.allianceRelativeControl(true);
+
+      Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
+
   public RobotContainer() {
-    // Configure the trigger bindings
     configureBindings();
+
+    swerveSubsystem.setDefaultCommand(swerveDriveCommand);
   }
 
   /**
@@ -48,7 +61,7 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
