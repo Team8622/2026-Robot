@@ -13,6 +13,11 @@ import frc.robot.subsystems.AlgaeLever;
 import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -27,10 +32,10 @@ public class RobotContainer {
   public static final CoralIntake coralIntake = new CoralIntake();
   public static final AlgaeLever algaeLever = new AlgaeLever();
 
-  public static final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-	public static final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
+  private static final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
+	private static final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
+  private static final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
 			() -> driverController.getLeftY(), // -1 on blue, 1 on red
 			() -> driverController.getLeftX())
 			.withControllerRotationAxis(() -> driverController.getRightX() * -1)
@@ -38,9 +43,21 @@ public class RobotContainer {
 			.scaleTranslation(0.8)
 			.allianceRelativeControl(true);
 
-      Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
+  private static final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
+
+  private final SendableChooser<Command> autonomousChooser;
+
+  // Change value based on if the code is being deployed for testing or for a competition match
+  private final boolean isCompetition = false;
 
   public RobotContainer() {
+    autonomousChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+      (stream) -> isCompetition
+        ? stream.filter(auto -> auto.getName().startsWith("comp"))
+        : stream
+    );
+		SmartDashboard.putData(autonomousChooser);
+
     configureBindings();
 
     swerveSubsystem.setDefaultCommand(swerveDriveCommand);
@@ -69,6 +86,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null; // TODO: Implement PathPlanner to use autos
+    return autonomousChooser.getSelected();
   }
 }
