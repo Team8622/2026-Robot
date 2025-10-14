@@ -22,6 +22,34 @@ public final class Constants {
     public static final double DEADBAND = 0.05;
   }
 
+  public static class IntakeConstants {
+    public static final int LEAD_MOTOR_CAN_ID = 13;
+    public static final int FOLLOW_MOTOR_CAN_ID = 14;
+
+    public static final double IN_SPEED = 0.25;
+    public static final double OUT_SPEED = -0.25;
+
+    public static final double OUT_SPEED_FAST = -0.6;
+  }
+
+  public static class AlgaeConstants {
+    public static final int MOTOR_CAN_ID = 12;
+
+    public static final double IN_SPEED = 0.45;
+    public static final double OUT_SPEED = -0.25;
+  }
+
+  public static class ElevatorConstants {
+    public static final int LEAD_MOTOR_CAN_ID = 10;
+    public static final int FOLLOW_MOTOR_CAN_ID = 9;
+
+    public static final double UP_SPEED = 0.1;
+    public static final double DOWN_SPEED = -0.1;
+
+    public static final double UP_SPEED_FAST = 0.4;
+    public static final double DOWN_SPEED_FAST = -0.4;
+  }
+
   public static class DriveConstants {
     public static final double MAX_SPEED = Units.feetToMeters(14.5);
   }
