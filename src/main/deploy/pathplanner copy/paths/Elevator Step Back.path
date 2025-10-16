@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.592425364074209,
+        "y": 3.9998974025602405
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.84133792783517,
+        "y": 3.9766050089102527
+      },
+      "isLocked": false,
+      "linkedName": "End of elevator test"
+    },
+    {
+      "anchor": {
+        "x": 6.535410441385555,
+        "y": 3.9998974025602405
+      },
+      "prevControl": {
+        "x": 5.535410441385555,
+        "y": 3.9998974025602405
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.7,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -179.46264378491318
+  },
+  "reversed": false,
+  "folder": "blue Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}

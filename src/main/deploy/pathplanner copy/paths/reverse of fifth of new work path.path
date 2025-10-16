@@ -1,0 +1,83 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 16.30524605415963,
+        "y": 1.051845736116976
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 16.28343188311438,
+        "y": 1.3228365099103496
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 15.183878965635556,
+        "y": 1.9017733187288843
+      },
+      "prevControl": {
+        "x": 15.429855443821882,
+        "y": 1.5415068516130697
+      },
+      "nextControl": {
+        "x": 14.84330576303843,
+        "y": 2.40058973157728
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 14.518655313027871,
+        "y": 3.8428437104096282
+      },
+      "prevControl": {
+        "x": 14.49859574094476,
+        "y": 4.092037638039983
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "elevatorL4",
+      "waypointRelativePos": 1.5,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "coralExtake",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 179.95403283948792
+  },
+  "reversed": false,
+  "folder": "red Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 124.65002609221223
+  },
+  "useDefaultConstraints": true
+}

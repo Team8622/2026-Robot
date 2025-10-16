@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorStartL2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Shift"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorNextL3"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "algaeRemove"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Step Back"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "blue auto Folder",
+  "choreoAuto": false
+}
