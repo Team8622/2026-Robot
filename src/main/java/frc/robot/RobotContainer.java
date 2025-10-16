@@ -11,6 +11,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.AnalogCommand;
 import frc.robot.subsystems.AlgaeLever;
 import frc.robot.subsystems.CoralIntake;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -31,17 +32,19 @@ public class RobotContainer {
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public static final CoralIntake coralIntake = new CoralIntake();
   public static final AlgaeLever algaeLever = new AlgaeLever();
+  public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   private static final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
 	private static final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
   private static final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-			() -> driverController.getLeftY(), // -1 on blue, 1 on red
-			() -> driverController.getLeftX())
-			.withControllerRotationAxis(() -> driverController.getRightX() * -1)
-			.deadband(ControllerConstants.DEADBAND)
-			.scaleTranslation(0.8)
-			.allianceRelativeControl(true);
+    () -> driverController.getLeftY(), // -1 on blue, 1 on red
+    () -> driverController.getLeftX())
+    .withControllerRotationAxis(() -> driverController.getRightX() * -1)
+    .deadband(ControllerConstants.DEADBAND)
+    .scaleTranslation(0.8)
+    .allianceRelativeControl(false
+    );
 
   private static final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
 
@@ -71,10 +74,10 @@ public class RobotContainer {
     operatorController.povUp().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.IN_SPEED));
     operatorController.povDown().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.OUT_SPEED));
 
-    operatorController.rightBumper().whileTrue(new AnalogCommand(algaeLever, ElevatorConstants.UP_SPEED));
-    operatorController.leftBumper().whileTrue(new AnalogCommand(algaeLever, ElevatorConstants.DOWN_SPEED));
-    operatorController.rightTrigger().whileTrue(new AnalogCommand(algaeLever, ElevatorConstants.UP_SPEED_FAST));
-    operatorController.leftTrigger().whileTrue(new AnalogCommand(algaeLever, ElevatorConstants.DOWN_SPEED_FAST));
+    operatorController.rightBumper().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.UP_SPEED));
+    operatorController.leftBumper().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.DOWN_SPEED));
+    operatorController.rightTrigger().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.UP_SPEED_FAST));
+    operatorController.leftTrigger().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.DOWN_SPEED_FAST));
 
     driverController.rightTrigger().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.IN_SPEED));
     driverController.leftTrigger().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED));

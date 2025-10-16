@@ -14,7 +14,7 @@ public class AnalogCommand extends Command {
   boolean stopOnEnd;
 
   public AnalogCommand(SubsystemBase subsystem, double speed) {
-    if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem");
+    if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
 
     this.subsystem = subsystem;
     this.speed = speed;
@@ -24,7 +24,7 @@ public class AnalogCommand extends Command {
   }
 
   public AnalogCommand(SubsystemBase subsystem, double speed, boolean stopOnEnd) {
-    if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem");
+    if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
 
     this.subsystem = subsystem;
     this.speed = speed;

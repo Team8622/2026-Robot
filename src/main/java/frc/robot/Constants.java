@@ -26,10 +26,10 @@ public final class Constants {
     public static final int LEAD_MOTOR_CAN_ID = 13;
     public static final int FOLLOW_MOTOR_CAN_ID = 14;
 
-    public static final double IN_SPEED = 0.25;
-    public static final double OUT_SPEED = -0.25;
+    public static final double IN_SPEED = -0.25;
+    public static final double OUT_SPEED = 0.25;
 
-    public static final double OUT_SPEED_FAST = -0.6;
+    public static final double OUT_SPEED_FAST = 0.6;
   }
 
   public static class AlgaeConstants {
