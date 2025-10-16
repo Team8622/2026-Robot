@@ -43,8 +43,7 @@ public class RobotContainer {
     .withControllerRotationAxis(() -> driverController.getRightX() * -1)
     .deadband(ControllerConstants.DEADBAND)
     .scaleTranslation(0.8)
-    .allianceRelativeControl(false
-    );
+    .allianceRelativeControl(false);
 
   private static final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
 
