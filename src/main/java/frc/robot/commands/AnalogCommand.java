@@ -11,24 +11,24 @@ import frc.robot.subsystems.ExtendedSubsystem;
 public class AnalogCommand extends Command {
   SubsystemBase subsystem;
   double speed;
-  boolean stopOnEnd;
+  boolean instantFinish;
 
   public AnalogCommand(SubsystemBase subsystem, double speed) {
     if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
 
     this.subsystem = subsystem;
     this.speed = speed;
-    this.stopOnEnd = false;
+    this.instantFinish = false;
 
     addRequirements(subsystem);
   }
 
-  public AnalogCommand(SubsystemBase subsystem, double speed, boolean stopOnEnd) {
+  public AnalogCommand(SubsystemBase subsystem, double speed, boolean instantFinish) {
     if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
 
     this.subsystem = subsystem;
     this.speed = speed;
-    this.stopOnEnd = stopOnEnd;
+    this.instantFinish = instantFinish;
 
     addRequirements(subsystem);
   }
@@ -44,10 +44,9 @@ public class AnalogCommand extends Command {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (stopOnEnd) return;
+    if (instantFinish) return;
 
     ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
     subsystem.stop();
@@ -55,6 +54,6 @@ public class AnalogCommand extends Command {
 
   @Override
   public boolean isFinished() {
-    return stopOnEnd;
+    return instantFinish;
   }
 }

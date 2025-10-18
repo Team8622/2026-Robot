@@ -78,8 +78,8 @@ public class RobotContainer {
     operatorController.b().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED));
     operatorController.x().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED_FAST));
     
-    operatorController.povUp().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.IN_SPEED));
-    operatorController.povDown().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.OUT_SPEED));
+    operatorController.povUp().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.UP_SPEED));
+    operatorController.povDown().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.DOWN_SPEED));
 
     operatorController.rightBumper().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.UP_SPEED));
     operatorController.leftBumper().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.DOWN_SPEED));
