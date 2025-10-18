@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Elevator test"
+            "pathName": "Left"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralIntake"
+            "name": "startIntake"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Elevator Step Back"
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIntake"
           }
         }
       ]

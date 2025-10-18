@@ -18,7 +18,7 @@ public class AnalogCommand extends Command {
 
     this.subsystem = subsystem;
     this.speed = speed;
-    this.stopOnEnd = true;
+    this.stopOnEnd = false;
 
     addRequirements(subsystem);
   }
@@ -47,16 +47,14 @@ public class AnalogCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.printf("end - interrupted? %s", interrupted); // TODO: Debug to determine whether to use end or isFinished.
+    if (stopOnEnd) return;
 
     ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
     subsystem.stop();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("isFinished");
-    return false;
+    return stopOnEnd;
   }
 }

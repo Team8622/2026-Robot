@@ -7,13 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left"
+            "pathName": "Right"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralIntake"
+            "name": "startIntake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIntake"
           }
         }
       ]

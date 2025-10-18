@@ -16,6 +16,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,6 +54,8 @@ public class RobotContainer {
   private final boolean isCompetition = false;
 
   public RobotContainer() {
+    setupPathPlannerCommands();
+
     autonomousChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
       (stream) -> isCompetition
         ? stream.filter(auto -> auto.getName().startsWith("comp"))
@@ -63,6 +66,11 @@ public class RobotContainer {
     configureBindings();
 
     swerveSubsystem.setDefaultCommand(swerveDriveCommand);
+  }
+
+  private void setupPathPlannerCommands() {
+    NamedCommands.registerCommand("startIntake", new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED_FAST, true));
+    NamedCommands.registerCommand("stopIntake", new AnalogCommand(coralIntake, 0, true));
   }
 
   private void configureBindings() {

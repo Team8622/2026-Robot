@@ -35,8 +35,8 @@ public final class Constants {
   public static class AlgaeConstants {
     public static final int MOTOR_CAN_ID = 12;
 
-    public static final double IN_SPEED = 0.45;
-    public static final double OUT_SPEED = -0.25;
+    public static final double IN_SPEED = -0.25;
+    public static final double OUT_SPEED = 0.45;
   }
 
   public static class ElevatorConstants {
