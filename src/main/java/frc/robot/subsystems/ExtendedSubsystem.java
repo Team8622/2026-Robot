@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 public interface ExtendedSubsystem {
-  // Used to require these fields
-  public void start(double speed);
-  public void stop();
+	// Used to require these fields
+	public void start(double speed);
+	public void stop();
 }

@@ -16,46 +16,46 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase implements ExtendedSubsystem {
-  SparkMax leadMotor;
-  SparkMax followMotor;
-  boolean isActive;
+	SparkMax leadMotor;
+	SparkMax followMotor;
+	boolean isActive;
 
-  public ElevatorSubsystem() {
-    leadMotor = new SparkMax(ElevatorConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
-    followMotor = new SparkMax(ElevatorConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
+	public ElevatorSubsystem() {
+		leadMotor = new SparkMax(ElevatorConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
+		followMotor = new SparkMax(ElevatorConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
 
-    SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
-    SparkMaxConfig followMotorConfig = new SparkMaxConfig();
+		SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
+		SparkMaxConfig followMotorConfig = new SparkMaxConfig();
 
-    leadMotorConfig.idleMode(IdleMode.kBrake);
-    leadMotorConfig.smartCurrentLimit(20);
-    leadMotorConfig.voltageCompensation(12);
+		leadMotorConfig.idleMode(IdleMode.kBrake);
+		leadMotorConfig.smartCurrentLimit(20);
+		leadMotorConfig.voltageCompensation(12);
 
-    followMotorConfig.idleMode(IdleMode.kBrake);
-    followMotorConfig.smartCurrentLimit(20);
-    followMotorConfig.voltageCompensation(12);
-    followMotorConfig.follow(ElevatorConstants.LEAD_MOTOR_CAN_ID, true);
+		followMotorConfig.idleMode(IdleMode.kBrake);
+		followMotorConfig.smartCurrentLimit(20);
+		followMotorConfig.voltageCompensation(12);
+		followMotorConfig.follow(ElevatorConstants.LEAD_MOTOR_CAN_ID, true);
 
-    leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    isActive = false;
-  }
+		isActive = false;
+	}
 
-  @Override
-  public void periodic() {
-    SmartDashboard.putBoolean("Elevator", isActive);
-  }
+	@Override
+	public void periodic() {
+		SmartDashboard.putBoolean("Elevator", isActive);
+	}
 
-  @Override
-  public void start(double speed) {
-    leadMotor.set(speed);
-    isActive = true;
-  }
+	@Override
+	public void start(double speed) {
+		leadMotor.set(speed);
+		isActive = true;
+	}
 
-  @Override
-  public void stop() {
-    leadMotor.set(0);
-    isActive = false;
-  }
+	@Override
+	public void stop() {
+		leadMotor.set(0);
+		isActive = false;
+	}
 }

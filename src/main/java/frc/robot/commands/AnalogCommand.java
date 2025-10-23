@@ -9,51 +9,54 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ExtendedSubsystem;
 
 public class AnalogCommand extends Command {
-  SubsystemBase subsystem;
-  double speed;
-  boolean instantFinish;
+	SubsystemBase subsystem;
+	double speed;
+	boolean instantFinish;
 
-  public AnalogCommand(SubsystemBase subsystem, double speed) {
-    if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
+	public AnalogCommand(SubsystemBase subsystem, double speed) {
+		if (subsystem instanceof ExtendedSubsystem == false)
+			throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
 
-    this.subsystem = subsystem;
-    this.speed = speed;
-    this.instantFinish = false;
+		this.subsystem = subsystem;
+		this.speed = speed;
+		this.instantFinish = false;
 
-    addRequirements(subsystem);
-  }
+		addRequirements(subsystem);
+	}
 
-  public AnalogCommand(SubsystemBase subsystem, double speed, boolean instantFinish) {
-    if (subsystem instanceof ExtendedSubsystem == false) throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
+	public AnalogCommand(SubsystemBase subsystem, double speed, boolean instantFinish) {
+		if (subsystem instanceof ExtendedSubsystem == false)
+			throw new Error("Subsystems need to implement ExtendedSubsystem in order to use AnalogCommand");
 
-    this.subsystem = subsystem;
-    this.speed = speed;
-    this.instantFinish = instantFinish;
+		this.subsystem = subsystem;
+		this.speed = speed;
+		this.instantFinish = instantFinish;
 
-    addRequirements(subsystem);
-  }
+		addRequirements(subsystem);
+	}
 
-  @Override
-  public void initialize() {
-    ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
+	@Override
+	public void initialize() {
+		ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
 
-    if (speed != 0) {
-      subsystem.start(speed);
-    } else {
-      subsystem.stop();
-    }
-  }
+		if (speed != 0) {
+			subsystem.start(speed);
+		} else {
+			subsystem.stop();
+		}
+	}
 
-  @Override
-  public void end(boolean interrupted) {
-    if (instantFinish) return;
+	@Override
+	public void end(boolean interrupted) {
+		if (instantFinish)
+			return;
 
-    ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
-    subsystem.stop();
-  }
+		ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
+		subsystem.stop();
+	}
 
-  @Override
-  public boolean isFinished() {
-    return instantFinish;
-  }
+	@Override
+	public boolean isFinished() {
+		return instantFinish;
+	}
 }

@@ -15,33 +15,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgaeLever extends SubsystemBase implements ExtendedSubsystem {
-  SparkMax motor;
-  boolean isActive;
+	SparkMax motor;
+	boolean isActive;
 
-  public AlgaeLever() {
-    motor = new SparkMax(AlgaeConstants.MOTOR_CAN_ID, MotorType.kBrushless);
+	public AlgaeLever() {
+		motor = new SparkMax(AlgaeConstants.MOTOR_CAN_ID, MotorType.kBrushless);
 
-    SparkMaxConfig motorConfig = new SparkMaxConfig();
-    motorConfig.idleMode(IdleMode.kBrake);
-    motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		SparkMaxConfig motorConfig = new SparkMaxConfig();
+		motorConfig.idleMode(IdleMode.kBrake);
+		motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    isActive = false;
-  }
+		isActive = false;
+	}
 
-  @Override
+	@Override
 	public void periodic() {
 		SmartDashboard.putBoolean("Algae Lever", isActive);
 	}
 
-  @Override
-  public void start(double speed) {
+	@Override
+	public void start(double speed) {
 		motor.set(speed);
 		isActive = true;
-  }
+	}
 
-  @Override
-  public void stop() {
-    motor.set(0);
+	@Override
+	public void stop() {
+		motor.set(0);
 		isActive = false;
-  }
+	}
 }

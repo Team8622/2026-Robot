@@ -15,40 +15,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralIntake extends SubsystemBase implements ExtendedSubsystem {
-  SparkMax leadMotor;
-  SparkMax followMotor;
-  boolean isActive;
+	SparkMax leadMotor;
+	SparkMax followMotor;
+	boolean isActive;
 
-  public CoralIntake() {
-    leadMotor = new SparkMax(IntakeConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
-    followMotor = new SparkMax(IntakeConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
+	public CoralIntake() {
+		leadMotor = new SparkMax(IntakeConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
+		followMotor = new SparkMax(IntakeConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
 
-    SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
-    leadMotorConfig.idleMode(IdleMode.kCoast);
-    leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
+		leadMotorConfig.idleMode(IdleMode.kCoast);
+		leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    SparkMaxConfig followMotorConfig = new SparkMaxConfig();
-    followMotorConfig.idleMode(IdleMode.kCoast);
-    followMotorConfig.follow(IntakeConstants.LEAD_MOTOR_CAN_ID, true);
-    followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		SparkMaxConfig followMotorConfig = new SparkMaxConfig();
+		followMotorConfig.idleMode(IdleMode.kCoast);
+		followMotorConfig.follow(IntakeConstants.LEAD_MOTOR_CAN_ID, true);
+		followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    isActive = false;
-  }
+		isActive = false;
+	}
 
-  @Override
+	@Override
 	public void periodic() {
 		SmartDashboard.putBoolean("Coral Intake", isActive);
 	}
 
-  @Override
-  public void start(double speed) {
+	@Override
+	public void start(double speed) {
 		leadMotor.set(speed);
 		isActive = true;
-  }
+	}
 
-  @Override
-  public void stop() {
-    leadMotor.set(0);
+	@Override
+	public void stop() {
+		leadMotor.set(0);
 		isActive = false;
-  }
+	}
 }
