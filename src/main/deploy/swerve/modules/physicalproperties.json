@@ -18,7 +18,7 @@
     }
   },
   "rampRate": {
-    "drive": 0.4,
-    "angle": 0.4
+    "drive": 0.25,
+    "angle": 0.25
   }
 }
