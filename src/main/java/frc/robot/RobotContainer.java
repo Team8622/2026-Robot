@@ -53,8 +53,7 @@ public class RobotContainer {
 
 	private final SendableChooser<Command> autonomousChooser;
 
-	// Change value based on if the code is being deployed for testing or for a
-	// competition match
+	// Change value based on if the code is being deployed for testing or for a competition match
 	private final boolean isCompetition = false;
 
 	public RobotContainer() {
