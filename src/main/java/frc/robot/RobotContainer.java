@@ -42,8 +42,8 @@ public class RobotContainer {
 	private static final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
 	private static final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-		() -> Math.signum(driverController.getLeftY()) * (1 - Math.sqrt(1 - Math.pow(driverController.getLeftY(), 2))), // -1 on blue, 1 on red
-		() -> Math.signum(driverController.getLeftX()) * (1 - Math.sqrt(1 - Math.pow(driverController.getLeftX(), 2))))
+		() -> applyControllerRamp(driverController.getLeftY(), driverController.getLeftX()), // -1 on blue, 1 on red
+		() -> applyControllerRamp(driverController.getLeftX(), driverController.getLeftY()))
 		.withControllerRotationAxis(() -> driverController.getRightX() * -1)
 		.deadband(ControllerConstants.DEADBAND)
 		.scaleTranslation(0.8)
@@ -90,6 +90,13 @@ public class RobotContainer {
 
 		driverController.rightTrigger().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.IN_SPEED));
 		driverController.leftTrigger().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED));
+	}
+
+	private static double applyControllerRamp(double primary, double secondary) {
+		double normalizedValue = primary / Math.max(Math.abs(primary), Math.abs(secondary));
+
+		double rampedValue = Math.signum(normalizedValue) * (1 - Math.sqrt(1 - Math.pow(normalizedValue, 2)));
+		return rampedValue;
 	}
 
 	/**
