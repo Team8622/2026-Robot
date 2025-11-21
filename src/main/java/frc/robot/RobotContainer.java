@@ -33,23 +33,23 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-	public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 	public static final CoralIntake coralIntake = new CoralIntake();
 	public static final AlgaeLever algaeLever = new AlgaeLever();
 	public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
-	private static final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-	private static final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
+	private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
+	private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
-	private static final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
+	private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
 		() -> applyControllerRamp(driverController.getLeftY(), driverController.getLeftX()), // -1 on blue, 1 on red
 		() -> applyControllerRamp(driverController.getLeftX(), driverController.getLeftY()))
 		.withControllerRotationAxis(() -> driverController.getRightX() * -1)
 		.deadband(ControllerConstants.DEADBAND)
-		.scaleTranslation(0.8)
+		.scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
 		.allianceRelativeControl(false);
 
-	private static final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
+	private final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
 
 	private final SendableChooser<Command> autonomousChooser;
 
@@ -93,7 +93,12 @@ public class RobotContainer {
 	}
 
 	private static double applyControllerRamp(double primary, double secondary) {
-		double normalizedValue = primary / Math.max(Math.abs(primary), Math.abs(secondary));
+        double speed = Math.sqrt(Math.pow(primary, 2), Math.pow(secondary, 2));
+		double max = Math.max(Math.abs(primary), Math.abs(secondary));
+		if (max == 0)
+            return 0;
+
+		double normalizedValue = primary * speed / max;
 
 		double rampedValue = Math.signum(normalizedValue) * (1 - Math.sqrt(1 - Math.pow(normalizedValue, 2)));
 		return rampedValue;

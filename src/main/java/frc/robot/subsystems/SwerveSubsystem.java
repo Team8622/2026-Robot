@@ -24,7 +24,6 @@ public class SwerveSubsystem extends SubsystemBase {
 	private SwerveDrive swerveDrive;
 
 	public SwerveSubsystem() {
-		System.out.println("Swerve Initializing...");
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 
 		try {
@@ -63,8 +62,7 @@ public class SwerveSubsystem extends SubsystemBase {
 				this // Reference to this subsystem to set requirements
 			);
 		} catch (Exception e) {
-			// Handle exception as needed
-			e.printStackTrace();
+			DriverStation.reportError("Failed to configure PathPlanner: " + e, e.getStackTrace());
 		}
 	}
 

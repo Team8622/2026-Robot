@@ -56,5 +56,6 @@ public final class Constants {
 
 	public static class DriveConstants {
 		public static final double MAX_SPEED = Units.feetToMeters(10);
+		public static final double SCALE_TRANSLATION = 0.8;
 	}
 }
