@@ -5,7 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.NewSubsystemConstants;
 import frc.robot.commands.AnalogCommand;
+import frc.robot.subsystems.NewSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -27,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+	private final NewSubsystem newSubsystem = new NewSubsystem();
 
 	private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
 	private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
@@ -64,6 +67,8 @@ public class RobotContainer {
 	}
 
 	private void configureBindings() {
+		operatorController.povUp().whileTrue(new AnalogCommand(newSubsystem, NewSubsystemConstants.FORWARD_SPEED));
+		operatorController.povDown().whileTrue(new AnalogCommand(newSubsystem, NewSubsystemConstants.BACKWARD_SPEED));
 	}
 
 	private static double applyControllerRamp(double primary, double secondary) {
