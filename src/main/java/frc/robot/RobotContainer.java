@@ -4,19 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.Constants.AlgaeConstants;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.AnalogCommand;
-import frc.robot.subsystems.AlgaeLever;
-import frc.robot.subsystems.CoralIntake;
-import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,9 +26,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-	public static final CoralIntake coralIntake = new CoralIntake();
-	public static final AlgaeLever algaeLever = new AlgaeLever();
-	public static final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
 	private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
@@ -71,25 +61,9 @@ public class RobotContainer {
 	}
 
 	private void setupPathPlannerCommands() {
-		NamedCommands.registerCommand("startIntake", new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED_FAST, true));
-		NamedCommands.registerCommand("stopIntake", new AnalogCommand(coralIntake, 0, true));
 	}
 
 	private void configureBindings() {
-		operatorController.a().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.IN_SPEED));
-		operatorController.b().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED));
-		operatorController.x().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED_FAST));
-
-		operatorController.povUp().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.UP_SPEED));
-		operatorController.povDown().whileTrue(new AnalogCommand(algaeLever, AlgaeConstants.DOWN_SPEED));
-
-		operatorController.rightBumper().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.UP_SPEED));
-		operatorController.leftBumper().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.DOWN_SPEED));
-		operatorController.rightTrigger().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.UP_SPEED_FAST));
-		operatorController.leftTrigger().whileTrue(new AnalogCommand(elevatorSubsystem, ElevatorConstants.DOWN_SPEED_FAST));
-
-		driverController.rightTrigger().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.IN_SPEED));
-		driverController.leftTrigger().whileTrue(new AnalogCommand(coralIntake, IntakeConstants.OUT_SPEED));
 	}
 
 	private static double applyControllerRamp(double primary, double secondary) {
