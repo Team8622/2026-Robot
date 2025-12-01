@@ -93,7 +93,7 @@ public class RobotContainer {
 	}
 
 	private static double applyControllerRamp(double primary, double secondary) {
-        double speed = Math.sqrt(Math.pow(primary, 2), Math.pow(secondary, 2));
+        double speed = Math.sqrt(Math.pow(primary, 2) + Math.pow(secondary, 2));
 		double max = Math.max(Math.abs(primary), Math.abs(secondary));
 		if (max == 0)
             return 0;
