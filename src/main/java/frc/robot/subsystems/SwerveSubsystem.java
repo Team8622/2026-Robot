@@ -27,7 +27,8 @@ public class SwerveSubsystem extends SubsystemBase {
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 
 		try {
-			File swerveConfigDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
+            // TODO: Change "false" to easily editable variable
+			File swerveConfigDirectory = new File(Filesystem.getDeployDirectory(), "swerve", false ? "comp_chassis" : "test_chassis");
 			swerveDrive = new SwerveParser(swerveConfigDirectory).createSwerveDrive(DriveConstants.MAX_SPEED);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
