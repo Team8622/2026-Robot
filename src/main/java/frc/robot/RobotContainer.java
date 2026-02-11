@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.NewSubsystemConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AnalogCommand;
-import frc.robot.subsystems.NewSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ShooterSubsytem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -29,7 +31,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-	private final NewSubsystem newSubsystem = new NewSubsystem();
+	private final ShooterSubsytem shooterSubsystem = new ShooterSubsytem();
+	private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 
 	private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
 	private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
@@ -67,8 +70,11 @@ public class RobotContainer {
 	}
 
 	private void configureBindings() {
-		operatorController.povUp().whileTrue(new AnalogCommand(newSubsystem, NewSubsystemConstants.FORWARD_SPEED));
-		operatorController.povDown().whileTrue(new AnalogCommand(newSubsystem, NewSubsystemConstants.BACKWARD_SPEED));
+		operatorController.rightTrigger().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
+		operatorController.rightBumper().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
+
+		operatorController.povUp().whileTrue(new AnalogCommand(climberSubsystem, NewSubsystemConstants.FORWARD_SPEED));
+		operatorController.povDown().whileTrue(new AnalogCommand(climberSubsystem, NewSubsystemConstants.BACKWARD_SPEED));
 	}
 
 	private static double applyControllerRamp(double primary, double secondary) {

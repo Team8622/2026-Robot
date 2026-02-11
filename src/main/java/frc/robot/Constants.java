@@ -19,20 +19,35 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static class ControllerConstants {
+	public static class ControllerConstants {
 		public static final int DRIVER_CONTROLLER_PORT = 0;
 		public static final int OPERATOR_CONTROLLER_PORT = 1;
 
 		public static final double DEADBAND = 0.05;
 	}
 
-    public static class NewSubsystemConstants {
-        public static final int LEAD_MOTOR_CAN_ID = 9;
-        public static final int FOLLOW_MOTOR_CAN_ID = 10;
+	public static class NewSubsystemConstants {
+		public static final int LEAD_MOTOR_CAN_ID = 9;
+		public static final int FOLLOW_MOTOR_CAN_ID = 10;
 
-        public static final double FORWARD_SPEED = 0.25;
-        public static final double BACKWARD_SPEED = -0.25;
-    }
+		public static final double FORWARD_SPEED = 0.25;
+		public static final double BACKWARD_SPEED = -0.25;
+	}
+
+	public static class ShooterConstants {
+		public static final int LEAD_MOTOR_CAN_ID = 10;
+		public static final int FOLLOW_MOTOR_CAN_ID = 11;
+
+		public static final double FORWARD_SPEED = 0.25;
+		public static final double BACKWARD_SPEED = -0.25;
+	}
+
+	public static class ClimberConstants {
+		public static final int LEAD_MOTOR_CAN_ID = 9;
+
+		public static final double FORWARD_SPEED = 0.25;
+		public static final double BACKWARD_SPEED = -0.25;
+	}
 
 	public static class DriveConstants {
 		public static final double MAX_SPEED = Units.feetToMeters(10);
