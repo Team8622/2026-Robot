@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.RoboRIOSerialNumbers;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -28,7 +29,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
 		try {
             // TODO: Change "false" to easily editable variable
-			File swerveConfigDirectory = new File(Filesystem.getDeployDirectory(), "swerve", false ? "comp_chassis" : "test_chassis");
+			File swerveConfigDirectory = new File(Filesystem.getDeployDirectory(), getSwervePath());
 			swerveDrive = new SwerveParser(swerveConfigDirectory).createSwerveDrive(DriveConstants.MAX_SPEED);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -65,6 +66,21 @@ public class SwerveSubsystem extends SubsystemBase {
 		} catch (Exception e) {
 			DriverStation.reportError("Failed to configure PathPlanner: " + e, e.getStackTrace());
 		}
+	}
+
+	private String getSwervePath() {
+		String subDirectory = "comp_chassis";
+
+		switch (System.getenv("serialnum")) {
+			case RoboRIOSerialNumbers.COMP_CHASSIS:
+				subDirectory = "comp_chassis";
+				break;
+			case RoboRIOSerialNumbers.TEST_CHASSIS:
+				subDirectory = "test_chassis";
+				break;
+		}
+		
+		return "swerve/" + subDirectory;
 	}
 
 	/**
