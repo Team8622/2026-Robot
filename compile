@@ -1,0 +1,9 @@
+#!/bin/bash
+gradle_mode="deploy"
+
+if [ -n "$1" ]; then
+    gradle_mode="$1"
+fi
+
+export GRADLE_OPTS="--enable-native-access=ALL-UNNAMED"
+./gradlew $gradle_mode -PteamNumber=8622 --offline -Dorg.gradle.java.home="$HOME/wpilib/2026/jdk"

@@ -4,10 +4,10 @@ import edu.wpi.first.math.geometry.Pose3d;
 import limelight.Limelight;
 import limelight.networktables.LimelightSettings.LEDMode;
 
-public class LimelightSubsytem {
+public final class LimelightSubsystem {
     private final Limelight limelight;
 
-    public LimelightSubsytem() {
+    public LimelightSubsystem() {
         limelight = new Limelight("limelight");
         limelight.getSettings()
                 .withLimelightLEDMode(LEDMode.PipelineControl)

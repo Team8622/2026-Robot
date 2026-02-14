@@ -22,7 +22,7 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveSubsystem extends SubsystemBase {
-	private SwerveDrive swerveDrive;
+	private final SwerveDrive swerveDrive;
 
 	public SwerveSubsystem() {
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -69,8 +69,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
 	private String getSwervePath() {
 		String subDirectory = "comp_chassis";
+		String serialNumber = System.getenv("serialnum");
 
-		switch (System.getenv("serialnum")) {
+		// Determine chassis configuration based on the "serialNumber" environment variable. If not set it defaults to comp_chassis.
+		switch (serialNumber != null ? serialNumber : "") {
 			case RoboRIOSerialNumbers.COMP_CHASSIS:
 				subDirectory = "comp_chassis";
 				break;

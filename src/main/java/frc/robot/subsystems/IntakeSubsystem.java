@@ -1,4 +1,3 @@
-
 package frc.robot.subsystems;
 
 import com.revrobotics.PersistMode;
@@ -8,18 +7,21 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ShooterConstants;
 
-public class ShooterSubsytem extends SubsystemBase implements ExtendedSubsystem {
-	SparkMax leadMotor;
-	SparkMax followMotor;
+import frc.robot.Constants.IntakeConstants;
 
-	boolean isActive;
+public class IntakeSubsystem extends SubsystemBase implements ExtendedSubsystem, TogglableSubsystem {
+	private SparkMax leadMotor;
+	private SparkMax followMotor;
 
-	public ShooterSubsytem() {
-		leadMotor = new SparkMax(ShooterConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
-		followMotor = new SparkMax(ShooterConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
+	private double currentSpeed;
+	private boolean isActive;
+
+	public IntakeSubsystem() {
+		leadMotor = new SparkMax(IntakeConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
+		followMotor = new SparkMax(IntakeConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
 
 		SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
 		leadMotorConfig.idleMode(IdleMode.kBrake);
@@ -27,28 +29,34 @@ public class ShooterSubsytem extends SubsystemBase implements ExtendedSubsystem 
 
 		SparkMaxConfig followMotorConfig = new SparkMaxConfig();
 		followMotorConfig.idleMode(IdleMode.kBrake);
-		followMotorConfig.follow(ShooterConstants.LEAD_MOTOR_CAN_ID, false);
+		followMotorConfig.follow(IntakeConstants.LEAD_MOTOR_CAN_ID, true);
 		followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+		currentSpeed = 0;
 		isActive = false;
 	}
 
 	@Override
 	public void periodic() {
-
+		SmartDashboard.putBoolean("IntakeSubsystem", isActive);
 	}
 
 	@Override
 	public void start(double speed) {
 		leadMotor.set(speed);
-
+		currentSpeed = speed;
 		isActive = true;
 	}
 
 	@Override
 	public void stop() {
 		leadMotor.set(0);
-
+		currentSpeed = 0;
 		isActive = false;
+	}
+
+	@Override
+	public double getCurrentSpeed() {
+		return currentSpeed;
 	}
 }

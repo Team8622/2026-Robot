@@ -4,12 +4,15 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.NewSubsystemConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AnalogCommand;
+import frc.robot.commands.ToggleCommand;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.ShooterSubsytem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -31,15 +34,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-	private final ShooterSubsytem shooterSubsystem = new ShooterSubsytem();
+	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
 	private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
 	private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
-	private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-		() -> applyControllerRamp(driverController.getLeftY(), driverController.getLeftX()), // -1 on blue, 1 on red
-		() -> applyControllerRamp(driverController.getLeftX(), driverController.getLeftY()))
+    private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
+        () -> -driverController.getLeftX(),
+        () -> driverController.getLeftY())
 		.withControllerRotationAxis(() -> driverController.getRightX() * -1)
 		.deadband(ControllerConstants.DEADBAND)
 		.scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
@@ -73,21 +77,14 @@ public class RobotContainer {
 		operatorController.rightTrigger().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
 		operatorController.rightBumper().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
 
-		operatorController.povUp().whileTrue(new AnalogCommand(climberSubsystem, NewSubsystemConstants.FORWARD_SPEED));
-		operatorController.povDown().whileTrue(new AnalogCommand(climberSubsystem, NewSubsystemConstants.BACKWARD_SPEED));
+		operatorController.povUp().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.FORWARD_SPEED));
+		operatorController.povDown().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.BACKWARD_SPEED));
+
+		operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
+		operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
 	}
 
-	private static double applyControllerRamp(double primary, double secondary) {
-        double speed = Math.sqrt(Math.pow(primary, 2) + Math.pow(secondary, 2));
-		double max = Math.max(Math.abs(primary), Math.abs(secondary));
-		if (max == 0)
-            return 0;
 
-		double normalizedValue = primary * speed / max;
-
-		double rampedValue = Math.signum(normalizedValue) * (1 - Math.sqrt(1 - Math.pow(normalizedValue, 2)));
-		return rampedValue;
-	}
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.

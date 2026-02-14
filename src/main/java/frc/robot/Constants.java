@@ -26,7 +26,7 @@ public final class Constants {
 		public static final double DEADBAND = 0.05;
 	}
 
-	public static class NewSubsystemConstants {
+	public static class IntakeConstants {
 		public static final int LEAD_MOTOR_CAN_ID = 9;
 		public static final int FOLLOW_MOTOR_CAN_ID = 10;
 
@@ -35,15 +35,16 @@ public final class Constants {
 	}
 
 	public static class ShooterConstants {
-		public static final int LEAD_MOTOR_CAN_ID = 10;
-		public static final int FOLLOW_MOTOR_CAN_ID = 11;
+		public static final int LEAD_MOTOR_CAN_ID = 11;
+		public static final int FOLLOW_MOTOR_CAN_ID = 12;
 
 		public static final double FORWARD_SPEED = 0.25;
 		public static final double BACKWARD_SPEED = -0.25;
 	}
 
 	public static class ClimberConstants {
-		public static final int LEAD_MOTOR_CAN_ID = 9;
+		public static final int LEAD_MOTOR_CAN_ID = 13;
+		public static final int FOLLOW_MOTOR_CAN_ID = 14;
 
 		public static final double FORWARD_SPEED = 0.25;
 		public static final double BACKWARD_SPEED = -0.25;
