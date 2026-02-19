@@ -37,10 +37,4 @@ public class ToggleCommand extends Command {
 			subsystem.stop();
 		}
 	}
-
-	@Override
-	public void end(boolean interrupted) {
-		ExtendedSubsystem subsystem = (ExtendedSubsystem) this.subsystem;
-	}
-	
 }
