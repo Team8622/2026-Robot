@@ -13,23 +13,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase implements ExtendedSubsystem {
-	private SparkMax leadMotor;
-	private SparkMax followMotor;
+	private SparkMax motor;
 
 	private boolean isActive;
 
 	public ClimberSubsystem() {
-		leadMotor = new SparkMax(ClimberConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
-		followMotor = new SparkMax(ClimberConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
+		motor = new SparkMax(ClimberConstants.MOTOR_CAN_ID, MotorType.kBrushless);
 
-		SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
-		leadMotorConfig.idleMode(IdleMode.kBrake);
-		leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-		SparkMaxConfig followMotorConfig = new SparkMaxConfig();
-        followMotorConfig.idleMode(IdleMode.kBrake);
-        followMotorConfig.follow(ClimberConstants.LEAD_MOTOR_CAN_ID, true);
-        followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		SparkMaxConfig motorConfig = new SparkMaxConfig();
+		motorConfig.idleMode(IdleMode.kBrake);
+		motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
 		isActive = false;
 	}
@@ -41,13 +34,13 @@ public class ClimberSubsystem extends SubsystemBase implements ExtendedSubsystem
 
 	@Override
 	public void start(double speed) {
-		leadMotor.set(speed);
+		motor.set(speed);
 		isActive = true;
 	}
 
 	@Override
 	public void stop() {
-		leadMotor.set(0);
+		motor.set(0);
 		isActive = false;
 	}
 }

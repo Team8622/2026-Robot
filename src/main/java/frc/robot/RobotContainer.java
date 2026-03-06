@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(this);
 	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -84,7 +84,9 @@ public class RobotContainer {
 		operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
 	}
 
-
+	public boolean shouldAim() {
+		return driverController.b().getAsBoolean();
+	}
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.

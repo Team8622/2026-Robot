@@ -25,12 +25,11 @@ public class IntakeSubsystem extends SubsystemBase implements ExtendedSubsystem,
 
 		SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
 		leadMotorConfig.idleMode(IdleMode.kBrake);
-		leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
 		SparkMaxConfig followMotorConfig = new SparkMaxConfig();
 		followMotorConfig.idleMode(IdleMode.kBrake);
-		followMotorConfig.follow(IntakeConstants.LEAD_MOTOR_CAN_ID, true);
-		followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+		followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
 		currentSpeed = 0;
 		isActive = false;
@@ -44,6 +43,7 @@ public class IntakeSubsystem extends SubsystemBase implements ExtendedSubsystem,
 	@Override
 	public void start(double speed) {
 		leadMotor.set(speed);
+        followMotor.set(speed * IntakeConstants.SPEED_RATIO);
 		currentSpeed = speed;
 		isActive = true;
 	}
@@ -51,6 +51,7 @@ public class IntakeSubsystem extends SubsystemBase implements ExtendedSubsystem,
 	@Override
 	public void stop() {
 		leadMotor.set(0);
+        followMotor.set(0);
 		currentSpeed = 0;
 		isActive = false;
 	}

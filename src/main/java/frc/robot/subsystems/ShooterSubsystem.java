@@ -12,23 +12,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public final class ShooterSubsystem extends SubsystemBase implements ExtendedSubsystem {
-    private final SparkMax leadMotor;
-    private final SparkMax followMotor;
+    private final SparkMax upperLeadMotor;
+    private final SparkMax lowerLeadMotor;
+    private final SparkMax upperFollowMotor;
+    private final SparkMax lowerFollowMotor;
 
     private boolean isActive;
 
     public ShooterSubsystem() {
-        leadMotor = new SparkMax(ShooterConstants.LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
-        followMotor = new SparkMax(ShooterConstants.FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
+        upperLeadMotor = new SparkMax(ShooterConstants.UPPER_LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
+        lowerLeadMotor = new SparkMax(ShooterConstants.LOWER_LEAD_MOTOR_CAN_ID, MotorType.kBrushless);
+        upperFollowMotor = new SparkMax(ShooterConstants.UPPER_FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
+        lowerFollowMotor = new SparkMax(ShooterConstants.LOWER_FOLLOW_MOTOR_CAN_ID, MotorType.kBrushless);
 
-        SparkMaxConfig leadMotorConfig = new SparkMaxConfig();
-        leadMotorConfig.idleMode(IdleMode.kBrake);
-        leadMotor.configure(leadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        SparkMaxConfig upperLeadMotorConfig = new SparkMaxConfig();
+        upperLeadMotorConfig.idleMode(IdleMode.kBrake);
+        upperLeadMotor.configure(upperLeadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        SparkMaxConfig followMotorConfig = new SparkMaxConfig();
-        followMotorConfig.idleMode(IdleMode.kBrake);
-        followMotorConfig.follow(ShooterConstants.LEAD_MOTOR_CAN_ID, false);
-        followMotor.configure(followMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        SparkMaxConfig lowerLeadMotorConfig = new SparkMaxConfig();
+        lowerLeadMotorConfig.idleMode(IdleMode.kBrake);
+        lowerLeadMotor.configure(lowerLeadMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+        SparkMaxConfig upperFollowMotorConfig = new SparkMaxConfig();
+        upperFollowMotorConfig.idleMode(IdleMode.kBrake);
+        upperFollowMotorConfig.follow(ShooterConstants.UPPER_LEAD_MOTOR_CAN_ID, false);
+        upperFollowMotor.configure(upperFollowMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+        SparkMaxConfig lowerFollowMotorConfig = new SparkMaxConfig();
+        lowerFollowMotorConfig.idleMode(IdleMode.kBrake);
+        lowerFollowMotorConfig.follow(ShooterConstants.LOWER_LEAD_MOTOR_CAN_ID, false);
+        lowerFollowMotor.configure(lowerFollowMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
         isActive = false;
     }
@@ -40,13 +53,15 @@ public final class ShooterSubsystem extends SubsystemBase implements ExtendedSub
 
     @Override
     public void start(double speed) {
-        leadMotor.set(speed);
+        upperLeadMotor.set(speed);
+        lowerLeadMotor.set(speed * ShooterConstants.SPEED_RATIO);
         isActive = true;
     }
 
     @Override
     public void stop() {
-        leadMotor.set(0);
+        upperLeadMotor.set(0);
+        lowerLeadMotor.set(0);
         isActive = false;
     }
 }
