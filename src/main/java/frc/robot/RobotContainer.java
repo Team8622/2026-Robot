@@ -33,67 +33,69 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(this);
-	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-	private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(this);
+    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+    private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+    private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-	private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
-	private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
+    private final CommandXboxController driverController = new CommandXboxController(ControllerConstants.DRIVER_CONTROLLER_PORT);
+    private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
     private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
         () -> driverController.getLeftY(),
         () -> driverController.getLeftX())
-		.withControllerRotationAxis(() -> driverController.getRightX())
-		.deadband(ControllerConstants.DEADBAND)
-		.scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
-		.allianceRelativeControl(false);
+        .withControllerRotationAxis(() -> driverController.getRightX())
+        .deadband(ControllerConstants.DEADBAND)
+        .scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
+        .allianceRelativeControl(false);
 
-	private final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
+    private final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
 
-	private final SendableChooser<Command> autonomousChooser;
+    private final SendableChooser<Command> autonomousChooser;
 
-	// Change value based on if the code is being deployed for testing or for a competition match
-	private final boolean isCompetition = false;
+    // Change value based on if the code is being deployed for testing or for a
+    // competition match
+    private final boolean isCompetition = false;
 
-	public RobotContainer() {
-		setupPathPlannerCommands();
+    public RobotContainer() {
+        setupPathPlannerCommands();
 
-		autonomousChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-			(stream) -> isCompetition
-				? stream.filter(auto -> auto.getName().startsWith("comp"))
-				: stream);
-		SmartDashboard.putData(autonomousChooser);
+        autonomousChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+            (stream) -> isCompetition
+                ? stream.filter(auto -> auto.getName().startsWith("comp"))
+                : stream);
+        SmartDashboard.putData(autonomousChooser);
 
-		configureBindings();
+        configureBindings();
 
-		swerveSubsystem.setDefaultCommand(swerveDriveCommand);
-	}
+        swerveSubsystem.setDefaultCommand(swerveDriveCommand);
+    }
 
-	private void setupPathPlannerCommands() {
-	}
+    private void setupPathPlannerCommands() {
 
-	private void configureBindings() {
-		operatorController.rightTrigger().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
-		operatorController.rightBumper().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
+    }
 
-		operatorController.povUp().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.FORWARD_SPEED));
-		operatorController.povDown().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.BACKWARD_SPEED));
+    private void configureBindings() {
+        operatorController.rightTrigger().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
+        operatorController.rightBumper().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
 
-		operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
-		operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
-	}
+        operatorController.povUp().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.FORWARD_SPEED));
+        operatorController.povDown().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.BACKWARD_SPEED));
 
-	public boolean shouldAim() {
-		return driverController.b().getAsBoolean();
-	}
+        operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
+        operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
+    }
 
-	/**
-	 * Use this to pass the autonomous command to the main {@link Robot} class.
-	 *
-	 * @return the command to run in autonomous
-	 */
-	public Command getAutonomousCommand() {
-		return autonomousChooser.getSelected();
-	}
+    public boolean shouldAim() {
+        return driverController.b().getAsBoolean();
+    }
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        return autonomousChooser.getSelected();
+    }
 }
