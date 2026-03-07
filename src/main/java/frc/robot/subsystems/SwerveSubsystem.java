@@ -27,7 +27,6 @@ import frc.robot.Constants.RoboRIOSerialNumbers;
 import limelight.Limelight;
 import limelight.networktables.AngularVelocity3d;
 import limelight.networktables.LimelightPoseEstimator;
-import limelight.networktables.LimelightResults;
 import limelight.networktables.Orientation3d;
 import limelight.networktables.PoseEstimate;
 import limelight.networktables.LimelightPoseEstimator.EstimationMode;
@@ -39,8 +38,8 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveSubsystem extends SubsystemBase {
     private final SwerveDrive swerveDrive;
-    private final Limelight limelight;
-    private final LimelightPoseEstimator poseEstimator;
+    private Limelight limelight;
+    private LimelightPoseEstimator poseEstimator;
     private final RobotContainer robotContainer;
 
     public SwerveSubsystem(RobotContainer robotContainer) {
@@ -53,14 +52,16 @@ public class SwerveSubsystem extends SubsystemBase {
             throw new RuntimeException(e);
         }
 
-        limelight = new Limelight("limelight");
-        limelight.getSettings()
-            .withLimelightLEDMode(LEDMode.PipelineControl)
-            .withCameraOffset(Pose3d.kZero)
-            .save();
-
-        poseEstimator = limelight.createPoseEstimator(EstimationMode.MEGATAG2);
-
+        try {
+            limelight = new Limelight("limelight");
+            limelight.getSettings()
+                .withLimelightLEDMode(LEDMode.PipelineControl)
+                .withCameraOffset(Pose3d.kZero)
+                .save();
+                poseEstimator = limelight.createPoseEstimator(EstimationMode.MEGATAG2);
+        } catch (Exception e) {
+            System.out.println("Failed to find limelight, Error: " + e.getMessage());
+        }
         this.robotContainer = robotContainer;
 
         SmartDashboard.putNumber("Hub X", 0);
@@ -124,27 +125,29 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        limelight.getSettings()
-            .withRobotOrientation(new Orientation3d(swerveDrive.getGyroRotation3d(), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(0))))
-            .save();
+        try {
+            limelight.getSettings()
+                .withRobotOrientation(new Orientation3d(swerveDrive.getGyroRotation3d(), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(0))))
+                .save();
 
-        Optional<PoseEstimate> visionEstimate = poseEstimator.getPoseEstimate(); // BotPose.BLUE_MEGATAG2.get(limelight);
-        visionEstimate.ifPresent((PoseEstimate poseEstimate) -> {
-            // If the average tag distance is less than 4 meters,
-            // there are more than 0 tags in view,
-            // and the average ambiguity between tags is less than 30% then we update the
-            // pose estimation.
-            SmartDashboard.putNumber("Avg Tag Dist", poseEstimate.avgTagDist);
-            SmartDashboard.putNumber("Tag Count", poseEstimate.tagCount);
-            SmartDashboard.putNumber("Tag Ambiguity", poseEstimate.getAvgTagAmbiguity());
+            Optional<PoseEstimate> visionEstimate = poseEstimator.getPoseEstimate(); // BotPose.BLUE_MEGATAG2.get(limelight);
+            visionEstimate.ifPresent((PoseEstimate poseEstimate) -> {
+                // If the average tag distance is less than 4 meters,
+                // there are more than 0 tags in view,
+                // and the average ambiguity between tags is less than 30% then we update the
+                // pose estimation.
+                SmartDashboard.putNumber("Avg Tag Dist", poseEstimate.avgTagDist);
+                SmartDashboard.putNumber("Tag Count", poseEstimate.tagCount);
+                SmartDashboard.putNumber("Tag Ambiguity", poseEstimate.getAvgTagAmbiguity());
 
-            boolean isVision = false;
-            if (poseEstimate.avgTagDist < 4 && poseEstimate.tagCount > 0 && poseEstimate.getMinTagAmbiguity() < 0.3) {
-                swerveDrive.swerveDrivePoseEstimator.addVisionMeasurement(poseEstimate.pose.toPose2d(), poseEstimate.timestampSeconds);
-                isVision = true;
-            }
-            SmartDashboard.putBoolean("isVision", isVision);
-        });
+                boolean isVision = false;
+                if (poseEstimate.avgTagDist < 4 && poseEstimate.tagCount > 0 && poseEstimate.getMinTagAmbiguity() < 0.3) {
+                    swerveDrive.swerveDrivePoseEstimator.addVisionMeasurement(poseEstimate.pose.toPose2d(), poseEstimate.timestampSeconds);
+                    isVision = true;
+                }
+                SmartDashboard.putBoolean("isVision", isVision);
+            });
+        } catch (Exception e) { }
     }
 
     /**
