@@ -37,4 +37,9 @@ public class ToggleCommand extends Command {
 			subsystem.stop();
 		}
 	}
+
+	@Override
+	public boolean isFinished() {
+		return true;
+	}
 }

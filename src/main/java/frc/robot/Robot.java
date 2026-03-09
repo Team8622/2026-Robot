@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
 	private Command autonomousCommand;
 
 	private final RobotContainer robotContainer;
-	private final Thread visionThread;
+	//private final Thread visionThread;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -38,29 +38,29 @@ public class Robot extends TimedRobot {
 	public Robot() {
 		robotContainer = new RobotContainer();
 
-		visionThread = new Thread(
-			() -> {
-				UsbCamera camera = CameraServer.startAutomaticCapture();
-				CvSink cvSink = CameraServer.getVideo();
-				CvSource outputStream = CameraServer.putVideo("Robot Camera", 640, 480);
-				Mat mat = new Mat();
+		// visionThread = new Thread(
+		// 	() -> {
+		// 		UsbCamera camera = CameraServer.startAutomaticCapture();
+		// 		CvSink cvSink = CameraServer.getVideo();
+		// 		CvSource outputStream = CameraServer.putVideo("Robot Camera", 640, 480);
+		// 		Mat mat = new Mat();
 
-				camera.setResolution(640, 480);
+		// 		camera.setResolution(640, 480);
 
-				while (!Thread.interrupted()) {
-					if (cvSink.grabFrame(mat) == 0) {
-						outputStream.notifyError(cvSink.getError());
-						continue;
-					}
+		// 		while (!Thread.interrupted()) {
+		// 			if (cvSink.grabFrame(mat) == 0) {
+		// 				outputStream.notifyError(cvSink.getError());
+		// 				continue;
+		// 			}
 
-					Imgproc.rectangle(mat, new Point(320, 0), new Point(320, 480), new Scalar(255, 255, 255), 5);
+		// 			Imgproc.rectangle(mat, new Point(320, 0), new Point(320, 480), new Scalar(255, 255, 255), 5);
 
-					outputStream.putFrame(mat);
-				}
-			});
+		// 			outputStream.putFrame(mat);
+		// 		}
+		// 	});
 
-		visionThread.setDaemon(true);
-		visionThread.start();
+		// visionThread.setDaemon(true);
+		// visionThread.start();
 	}
 
 	/**

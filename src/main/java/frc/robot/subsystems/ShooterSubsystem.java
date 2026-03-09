@@ -35,12 +35,12 @@ public final class ShooterSubsystem extends SubsystemBase implements ExtendedSub
 
         SparkMaxConfig upperFollowMotorConfig = new SparkMaxConfig();
         upperFollowMotorConfig.idleMode(IdleMode.kBrake);
-        upperFollowMotorConfig.follow(ShooterConstants.UPPER_LEAD_MOTOR_CAN_ID, false);
+        upperFollowMotorConfig.follow(ShooterConstants.UPPER_LEAD_MOTOR_CAN_ID, true);
         upperFollowMotor.configure(upperFollowMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
         SparkMaxConfig lowerFollowMotorConfig = new SparkMaxConfig();
         lowerFollowMotorConfig.idleMode(IdleMode.kBrake);
-        lowerFollowMotorConfig.follow(ShooterConstants.LOWER_LEAD_MOTOR_CAN_ID, false);
+        lowerFollowMotorConfig.follow(ShooterConstants.LOWER_LEAD_MOTOR_CAN_ID, true);
         lowerFollowMotor.configure(lowerFollowMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
         isActive = false;
@@ -53,8 +53,8 @@ public final class ShooterSubsystem extends SubsystemBase implements ExtendedSub
 
     @Override
     public void start(double speed) {
-        upperLeadMotor.set(speed);
-        lowerLeadMotor.set(speed * ShooterConstants.SPEED_RATIO);
+        upperLeadMotor.set(speed * ShooterConstants.SPEED_RATIO);
+        lowerLeadMotor.set(speed);
         isActive = true;
     }
 

@@ -30,10 +30,10 @@ public final class Constants {
 		public static final int LEAD_MOTOR_CAN_ID = 13;
 		public static final int FOLLOW_MOTOR_CAN_ID = 14;
 
-		public static final double FORWARD_SPEED = 0.25;
-		public static final double BACKWARD_SPEED = -0.25;
+		public static final double FORWARD_SPEED = -0.5;
+		public static final double BACKWARD_SPEED = 0.5;
 
-		public static final double SPEED_RATIO = 1;
+		public static final double SPEED_RATIO = -1;
 	}
 
 	public static class ShooterConstants {
@@ -42,17 +42,17 @@ public final class Constants {
 		public static final int UPPER_FOLLOW_MOTOR_CAN_ID = 11;
 		public static final int LOWER_FOLLOW_MOTOR_CAN_ID = 12;
 
-		public static final double FORWARD_SPEED = 0.25;
-		public static final double BACKWARD_SPEED = -0.25;
+		public static final double FORWARD_SPEED = 0.75;
+		public static final double BACKWARD_SPEED = -0.5;
 
-		public static final double SPEED_RATIO = 1;
+		public static final double SPEED_RATIO = 0.5;
 	}
 
 	public static class ClimberConstants {
 		public static final int MOTOR_CAN_ID = 15;
 
-		public static final double FORWARD_SPEED = 0.25;
-		public static final double BACKWARD_SPEED = -0.25;
+		public static final double FORWARD_SPEED = -0.25;
+		public static final double BACKWARD_SPEED = 0.25;
 	}
 
 	public static class DriveConstants {
