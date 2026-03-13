@@ -42,8 +42,8 @@ public class RobotContainer {
     private final CommandXboxController operatorController = new CommandXboxController(ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
     private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-        () -> driverController.getLeftY(),
-        () -> driverController.getLeftX())
+        () -> driverController.getLeftY() * (driverController.rightTrigger().getAsBoolean() ? 0.25 : 1),
+        () -> driverController.getLeftX() * (driverController.rightTrigger().getAsBoolean() ? 0.25 : 1))
         .withControllerRotationAxis(() -> driverController.getRightX())
         .deadband(ControllerConstants.DEADBAND)
         .scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
