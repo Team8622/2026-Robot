@@ -13,11 +13,13 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -56,7 +58,7 @@ public class SwerveSubsystem extends SubsystemBase {
             limelight = new Limelight("limelight");
             limelight.getSettings()
                 .withLimelightLEDMode(LEDMode.PipelineControl)
-                .withCameraOffset(Pose3d.kZero)
+                .withCameraOffset(new Pose3d(0.34925, -0.2159, 0.3683, new Rotation3d(0, 0.436332313, 0)))
                 .save();
                 poseEstimator = limelight.createPoseEstimator(EstimationMode.MEGATAG2);
         } catch (Exception e) {
@@ -64,8 +66,9 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         this.robotContainer = robotContainer;
 
-        SmartDashboard.putNumber("Hub X", 0);
-        SmartDashboard.putNumber("Hub Y", 10);
+        SmartDashboard.putNumber("Hub X", DriverStation.getAlliance().equals(Alliance.Red) ? 0 : 0);
+        SmartDashboard.putNumber("Hub Y", 2.91846);
+        SmartDashboard.putNumber("velocity_test_input", 0.0);
 
         setupPathPlanner();
     }
@@ -130,6 +133,13 @@ public class SwerveSubsystem extends SubsystemBase {
                 .withRobotOrientation(new Orientation3d(swerveDrive.getGyroRotation3d(), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(0))))
                 .save();
 
+            SmartDashboard.putNumber("Robot X", swerveDrive.getPose().getX());
+            SmartDashboard.putNumber("Robot Y", swerveDrive.getPose().getY());
+
+            double[] limelightIMUData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("imu").getDoubleArray(new double[]{0.0});
+            double robotRotation = limelightIMUData[0] * (Math.PI / 180) - Math.PI;
+            SmartDashboard.putNumber("Robot Rotation Degrees", robotRotation * (180/Math.PI));
+
             Optional<PoseEstimate> visionEstimate = poseEstimator.getPoseEstimate(); // BotPose.BLUE_MEGATAG2.get(limelight);
             visionEstimate.ifPresent((PoseEstimate poseEstimate) -> {
                 // If the average tag distance is less than 4 meters,
@@ -166,30 +176,35 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     private double getTargetVelocity() {
-        double kP = .0275;
+        double kP = .045;
 
         double robotX = swerveDrive.getPose().getX();
         double robotY = swerveDrive.getPose().getY();
 
         double[] limelightIMUData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("imu").getDoubleArray(new double[]{0.0});
         double robotRotation = 0.0;
-
-        robotRotation = limelightIMUData[0] * (Math.PI / 180);
+        robotRotation = limelightIMUData[0] * (Math.PI / 180) - Math.PI;
 
         double hubX = SmartDashboard.getNumber("Hub X", 0.0);
         double hubY = SmartDashboard.getNumber("Hub Y", 0.0);
 
         double targetAngle = Math.atan2(hubY - robotY, hubX - robotX);
-
-        double targetingAngularVelocity = Math.atan2(Math.sin(targetAngle - robotRotation), Math.cos(targetAngle - robotRotation));
+        SmartDashboard.putNumber("Target Angle", targetAngle);
+        
+        //double targetingAngularVelocity = Math.atan2(Math.sin(targetAngle - robotRotation), Math.cos(targetAngle - robotRotation));
+        double targetingAngularVelocity = (targetAngle - robotRotation + Math.PI) % (2 * Math.PI) - Math.PI;
+        //targetingAngularVelocity = targetingAngularVelocity > 0 ? targetingAngularVelocity : -Math.PI + targetingAngularVelocity;
         targetingAngularVelocity *= kP * swerveDrive.getMaximumChassisAngularVelocity();
 
-        SmartDashboard.putNumber("Robot X", swerveDrive.getPose().getX());
-        SmartDashboard.putNumber("Robot Y", swerveDrive.getPose().getY());
+        //Current 60 Target 30
+        // 30 - 60 = -30
+        // Current 60 Target -30
+        // (180 - -60) % 180 = 60.
+
         SmartDashboard.putNumber("Robot Rotation", robotRotation);
         SmartDashboard.putNumber("Target Angular Velocity", targetingAngularVelocity);
 
-        return targetingAngularVelocity;
+        return SmartDashboard.getNumber("velocity_test_input", 0.0);
     }
 
     // Required for PathPlanner
