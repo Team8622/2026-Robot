@@ -5,33 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "Right"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "startIntake"
+            "name": "Enable Shooter"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 5.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "stopIntake"
+            "name": "Disable Shooter"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "blue auto Folder",
+  "folder": "Red Auto Folder",
   "choreoAuto": false
 }

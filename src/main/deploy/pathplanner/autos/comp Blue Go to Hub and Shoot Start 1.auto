@@ -7,31 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left"
+            "pathName": "Blue Go To Hub 1"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "startIntake"
+            "name": "Enable Shooter"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 5.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "stopIntake"
+            "name": "Disable Shooter"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "blue auto Folder",
+  "folder": "Blue Auto Folder",
   "choreoAuto": false
 }

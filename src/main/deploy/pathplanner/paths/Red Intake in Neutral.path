@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.592425364074209,
-        "y": 3.9998974025602405
+        "x": 8.25,
+        "y": 1.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.325074628431617,
-        "y": 3.868927252933665
+        "x": 8.25,
+        "y": 2.0
       },
       "isLocked": false,
-      "linkedName": "End of elevator test"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.296604456322526,
-        "y": 0.9090018713730547
+        "x": 8.25,
+        "y": 6.9394382022471905
       },
       "prevControl": {
-        "x": 3.6147761047129165,
-        "y": 0.4768003776053559
+        "x": 8.25,
+        "y": 6.6894382022471905
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.17,
-    "maxAcceleration": 0.97,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 55.175510843043284
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": "blue Folder",
+  "folder": "Red Alliance",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

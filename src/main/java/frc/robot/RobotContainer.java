@@ -17,6 +17,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -66,6 +67,11 @@ public class RobotContainer {
                 ? stream.filter(auto -> auto.getName().startsWith("comp"))
                 : stream);
         SmartDashboard.putData(autonomousChooser);
+
+        NamedCommands.registerCommand("Enable Shooter", new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED,true));
+        NamedCommands.registerCommand("Disable Shooter", new AnalogCommand(shooterSubsystem, 0, true));
+        NamedCommands.registerCommand("Enable Intake", new AnalogCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED,true));
+        NamedCommands.registerCommand("Disable Intake", new AnalogCommand(intakeSubsystem, 0,true));
 
         configureBindings();
 

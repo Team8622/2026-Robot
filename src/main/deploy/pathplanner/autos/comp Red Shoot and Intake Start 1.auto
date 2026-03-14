@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red Go to Hub 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Enable Shooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Disable Shooter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red Navigate Behind Ramp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red Cross Ramp into Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red Line Up Intake in Nuetral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Enable Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red Intake in Neutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Disable Intake"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Red Auto Folder",
+  "choreoAuto": false
+}

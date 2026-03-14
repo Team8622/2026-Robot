@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Go To Hub 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Enable Shooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Disable Shooter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Navigate Behind Ramp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Cross Ramp into Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Line up Intake in Neutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Enable Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Intake in Neutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Disable Intake"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Blue Auto Folder",
+  "choreoAuto": false
+}
