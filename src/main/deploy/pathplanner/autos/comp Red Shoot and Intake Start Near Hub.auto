@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Red Go to Hub Near Hub"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Enable Shooter"

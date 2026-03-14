@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0,
+        "x": 3.55,
         "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
-        "y": 4.0
+        "x": 3.9099569997633754,
+        "y": 3.9987994567129856
       },
       "isLocked": false,
       "linkedName": null
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 3.0,
-        "y": 0.59
+        "y": 4.0
       },
       "prevControl": {
-        "x": 2.0,
-        "y": 0.5899999999999999
+        "x": 2.7436851302452867,
+        "y": 4.0029507118359975
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Blue Alliance",
