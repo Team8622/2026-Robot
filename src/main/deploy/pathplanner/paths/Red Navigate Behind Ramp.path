@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 13.54,
-        "y": 0.59
+        "y": 2.5
       },
       "prevControl": {
         "x": 14.54,
-        "y": 0.5899999999999999
+        "y": 2.5
       },
       "nextControl": null,
       "isLocked": false,
