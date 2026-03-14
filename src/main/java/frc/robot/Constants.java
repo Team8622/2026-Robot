@@ -42,7 +42,7 @@ public final class Constants {
 		public static final int UPPER_FOLLOW_MOTOR_CAN_ID = 11;
 		public static final int LOWER_FOLLOW_MOTOR_CAN_ID = 12;
 
-		public static final double FORWARD_SPEED = 0.75;
+		public static final double FORWARD_SPEED = 1;
 		public static final double BACKWARD_SPEED = -0.5;
 
 		public static final double SPEED_RATIO = 0.5;
