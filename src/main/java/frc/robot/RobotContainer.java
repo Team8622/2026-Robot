@@ -10,6 +10,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AnalogCommand;
 import frc.robot.commands.ToggleCommand;
+import frc.robot.commands.ZeroGyro;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -91,6 +92,8 @@ public class RobotContainer {
 
         operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
         operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
+
+        driverController.y().whileTrue(new ZeroGyro(swerveSubsystem));
     }
 
     public boolean shouldAim() {

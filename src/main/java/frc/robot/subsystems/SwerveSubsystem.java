@@ -13,6 +13,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -224,5 +225,15 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public SwerveDrive getSwerveDrive() {
         return swerveDrive;
+    }
+
+    //This was ripped from last years code, so don't trust it.
+    public void zeroGyroWithAlliance() {
+        if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) {
+            swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
+        } else {
+            swerveDrive.zeroGyro();
+        }
     }
 }
