@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Go to Hub 1"
+            "pathName": "Blue Center to Hub"
           }
         },
         {
@@ -32,6 +32,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Red Auto Folder",
+  "folder": "Blue Auto Folder",
   "choreoAuto": false
 }
