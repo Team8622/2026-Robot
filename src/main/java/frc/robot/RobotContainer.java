@@ -90,7 +90,7 @@ public class RobotContainer {
                 new AnalogCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED, true));
         NamedCommands.registerCommand("Disable Intake", new AnalogCommand(intakeSubsystem, 0, true));
 
-        Pose2d hubShootingPointTargetPose = new Pose2d(3, 4, (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0));
+        Pose2d hubShootingPointTargetPose = (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? (new Pose2d(13.54, 4, Rotation2d.fromDegrees(180))) : ((new Pose2d(3, 4, Rotation2d.fromDegrees(0))));
 
         PathConstraints basicConstraints = new PathConstraints(
                 3.0, 4.0,
