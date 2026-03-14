@@ -66,7 +66,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         this.robotContainer = robotContainer;
 
-        SmartDashboard.putNumber("Hub X", DriverStation.getAlliance().equals(Alliance.Red) ? 0 : 0);
+        SmartDashboard.putNumber("Hub X", (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? 0 : 0);
         SmartDashboard.putNumber("Hub Y", 2.91846);
         SmartDashboard.putNumber("velocity_test_input", 0.0);
 
