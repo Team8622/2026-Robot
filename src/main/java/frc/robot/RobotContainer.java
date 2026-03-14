@@ -69,18 +69,16 @@ public class RobotContainer {
                 : stream);
         SmartDashboard.putData(autonomousChooser);
 
-        NamedCommands.registerCommand("Enable Shooter", new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED,true));
-        NamedCommands.registerCommand("Disable Shooter", new AnalogCommand(shooterSubsystem, 0, true));
-        NamedCommands.registerCommand("Enable Intake", new AnalogCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED,true));
-        NamedCommands.registerCommand("Disable Intake", new AnalogCommand(intakeSubsystem, 0,true));
-
         configureBindings();
 
         swerveSubsystem.setDefaultCommand(swerveDriveCommand);
     }
 
     private void setupPathPlannerCommands() {
-
+        NamedCommands.registerCommand("Enable Shooter", new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED,true));
+        NamedCommands.registerCommand("Disable Shooter", new AnalogCommand(shooterSubsystem, 0, true));
+        NamedCommands.registerCommand("Enable Intake", new AnalogCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED,true));
+        NamedCommands.registerCommand("Disable Intake", new AnalogCommand(intakeSubsystem, 0,true));
     }
 
     private void configureBindings() {
