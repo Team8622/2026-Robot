@@ -12,7 +12,7 @@
         "y": 1.5
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Across Ramp"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Lined Up Intake"
     }
   ],
   "rotationTargets": [],
