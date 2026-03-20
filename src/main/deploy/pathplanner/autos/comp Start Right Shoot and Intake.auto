@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Center to Hub"
+            "pathName": "Right to Hub"
           }
         },
         {
@@ -31,19 +31,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Navigate Behind Ramp"
+            "pathName": "Navigate Behind Ramp"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Red Cross Ramp into Neutral"
+            "pathName": "Cross Ramp into Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Red Line Up Intake in Neutral"
+            "pathName": "Line up Intake in Neutral"
           }
         },
         {
@@ -55,7 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Intake in Neutral"
+            "pathName": "Intake in Neutral"
           }
         },
         {
@@ -68,6 +68,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Red Auto Folder",
+  "folder": "Auto Folder",
   "choreoAuto": false
 }

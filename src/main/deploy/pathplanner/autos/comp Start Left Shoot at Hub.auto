@@ -5,9 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Pathfind to Hub"
+            "pathName": "Left to Hub"
           }
         },
         {
@@ -32,6 +32,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Red Auto Folder",
+  "folder": "Auto Folder",
   "choreoAuto": false
 }
