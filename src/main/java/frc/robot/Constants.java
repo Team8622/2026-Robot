@@ -49,13 +49,20 @@ public final class Constants {
 		public static final double SPEED_RATIO = 0.5;
 	}
 
+	public static class ClimberConstants {
+		public static final int MOTOR_CAN_ID = 15;
+
+		public static final double FORWARD_SPEED = -0.25;
+		public static final double BACKWARD_SPEED = 0.25;
+	}
+
 	public static class DriveConstants {
 		public static final double MAX_SPEED = Units.feetToMeters(10);
 		public static final double SCALE_TRANSLATION = 0.8;
 	}
 
 	public static class RoboRIOSerialNumbers {
-		public static final String COMP_CHASSIS = "03161778";
-		public static final String TEST_CHASSIS = "03415940";
+		public static final String COMP_CHASSIS = "03415940";
+		public static final String TEST_CHASSIS = "03161778";
 	}
 }
