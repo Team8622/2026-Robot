@@ -32,6 +32,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Auto Folder",
+  "folder": "Shoot at Hub",
   "choreoAuto": false
 }

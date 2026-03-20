@@ -68,6 +68,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Auto Folder",
+  "folder": "Shoot and Intake",
   "choreoAuto": false
 }
