@@ -3,12 +3,11 @@
   "robotLength": 0.84455,
   "holonomicMode": true,
   "pathFolders": [
-    "Blue Alliance",
-    "Red Alliance"
+    "Start to Hub"
   ],
   "autoFolders": [
-    "Blue Auto Folder",
-    "Red Auto Folder"
+    "Shoot and Intake",
+    "Shoot at Hub"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
