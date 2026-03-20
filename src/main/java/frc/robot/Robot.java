@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -110,6 +113,10 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+
+		if (isSimulation()){
+			robotContainer.simTeleopInit();
+		}
 	}
 
 	/** This function is called periodically during operator control. */
@@ -128,9 +135,13 @@ public class Robot extends TimedRobot {
 
 	/** This function is called once when the robot is first started up. */
 	@Override
-	public void simulationInit() {}
+	public void simulationInit() {
+		SimulatedArena.overrideInstance(new Arena2026Rebuilt());
+	}
 
 	/** This function is called periodically whilst in simulation. */
 	@Override
-	public void simulationPeriodic() {}
+	public void simulationPeriodic() {
+		SimulatedArena.getInstance().simulationPeriodic();
+	}
 }
