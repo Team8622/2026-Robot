@@ -55,7 +55,7 @@ public final class Constants {
 	}
 
 	public static class RoboRIOSerialNumbers {
-		public static final String COMP_CHASSIS = "03415940";
-		public static final String TEST_CHASSIS = "03161778";
+		public static final String COMP_CHASSIS = "03161778";
+		public static final String TEST_CHASSIS = "03415940";
 	}
 }
