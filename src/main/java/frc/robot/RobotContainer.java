@@ -18,14 +18,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AnalogCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.ZeroGyro;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -43,7 +41,6 @@ import swervelib.SwerveInputStream;
 public class RobotContainer {
     private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(this);
     private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-    private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
     private final CommandXboxController driverController = new CommandXboxController(
@@ -111,9 +108,6 @@ public class RobotContainer {
                 .whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
         operatorController.rightBumper()
                 .whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
-
-        operatorController.povUp().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.FORWARD_SPEED));
-        operatorController.povDown().whileTrue(new AnalogCommand(climberSubsystem, ClimberConstants.BACKWARD_SPEED));
 
         operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
         operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
