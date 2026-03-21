@@ -14,7 +14,6 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -58,10 +57,10 @@ public class SwerveSubsystem extends SubsystemBase {
         try {
             limelight = new Limelight("limelight");
             limelight.getSettings()
-                .withLimelightLEDMode(LEDMode.PipelineControl)
-                .withCameraOffset(new Pose3d(0.34925, -0.2159, 0.3683, new Rotation3d(0, 0.436332313, 0)))
-                .save();
-                poseEstimator = limelight.createPoseEstimator(EstimationMode.MEGATAG2);
+                    .withLimelightLEDMode(LEDMode.PipelineControl)
+                    .withCameraOffset(LimelightConstants.LIMELIGHT_POSITION)
+                    .save();
+            poseEstimator = limelight.createPoseEstimator(EstimationMode.MEGATAG2);
         } catch (Exception e) {
             System.out.println("Failed to find limelight, Error: " + e.getMessage());
         }

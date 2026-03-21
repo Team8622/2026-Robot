@@ -58,4 +58,8 @@ public final class Constants {
 		public static final String COMP_CHASSIS = "03161778";
 		public static final String TEST_CHASSIS = "03415940";
 	}
+
+	public static class LimelightConstants{
+		public static final Pose3d LIMELIGHT_POSITION = new Pose3d(0.1460,0,0.4953,new Rotation3d());
+	}
 }
