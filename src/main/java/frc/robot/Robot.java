@@ -7,9 +7,16 @@ package frc.robot;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.SimulationConstants;
+import swervelib.SwerveDrive;
 
 /**
  * The methods in this class are called automatically corresponding to each
@@ -31,6 +38,10 @@ public class Robot extends TimedRobot {
 	 */
 	public Robot() {
 		robotContainer = new RobotContainer();
+
+		if (isSimulation()) {
+      		DriverStation.silenceJoystickConnectionWarning(true);
+    	}
 
 		// visionThread = new Thread(
 		// 	() -> {
@@ -94,6 +105,12 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		autonomousCommand = robotContainer.getAutonomousCommand();
 
+		if(isSimulation()){
+			if(autonomousCommand.getName().contains("Start Anywhere")){
+				simPositionInit(robotContainer.getSwerveSubSystem().getSwerveDrive());
+			}
+		}
+
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
             CommandScheduler.getInstance().schedule(autonomousCommand);
@@ -115,9 +132,20 @@ public class Robot extends TimedRobot {
 		}
 
 		if (isSimulation()){
-			robotContainer.simTeleopInit();
+			simPositionInit(robotContainer.getSwerveSubSystem().getSwerveDrive());
 		}
 	}
+
+	public void simPositionInit(SwerveDrive swerveDrive){
+
+        if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) {
+            swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(SimulationConstants.RED_SIM_STARTING_POSITION);
+        } else {
+            swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(SimulationConstants.BLUE_SIM_STARTING_POSTIION);
+        }
+    }
 
 	/** This function is called periodically during operator control. */
 	@Override

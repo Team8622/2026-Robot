@@ -50,6 +50,10 @@ public class SwerveSubsystem extends SubsystemBase {
         try {
             File swerveConfigDirectory = new File(Filesystem.getDeployDirectory(), getSwervePath());
             swerveDrive = new SwerveParser(swerveConfigDirectory).createSwerveDrive(DriveConstants.MAX_SPEED);
+            if (Robot.isSimulation()) {
+                swerveDrive.setHeadingCorrection(false);
+                swerveDrive.setCosineCompensator(false);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

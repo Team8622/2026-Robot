@@ -10,7 +10,6 @@ import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -27,7 +26,6 @@ import frc.robot.commands.ZeroGyro;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 
 /**
@@ -129,18 +127,7 @@ public class RobotContainer {
         return autonomousChooser.getSelected();
     }
 
-    public void simTeleopInit(){
-        SwerveDrive swerveDrive = swerveSubsystem.getSwerveDrive();
-
-        Pose2d blueStartingPosition = new Pose2d(new Translation2d(3.550,4), Rotation2d.fromDegrees(0));
-        Pose2d redStartingPosition = new Pose2d(new Translation2d(12.99,4), Rotation2d.fromDegrees(180));
-
-        if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) {
-            swerveDrive.zeroGyro();
-            swerveDrive.resetOdometry(redStartingPosition);
-        } else {
-            swerveDrive.zeroGyro();
-            swerveDrive.resetOdometry(blueStartingPosition);
-        }
+    public SwerveSubsystem getSwerveSubSystem(){
+        return swerveSubsystem;
     }
 }
