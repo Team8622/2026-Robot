@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -19,6 +21,11 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+	public static class TargetConstants{
+		public static final Pose3d BLUE_HUB_POSE3D = new Pose3d(4.03,4,4.35, new Rotation3d());
+		public static final Pose3d RED_HUB_POSE3D = new Pose3d(12.51,4,4.35,new Rotation3d());
+	}
 	public static class ControllerConstants {
 		public static final int DRIVER_CONTROLLER_PORT = 0;
 		public static final int OPERATOR_CONTROLLER_PORT = 1;

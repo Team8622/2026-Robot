@@ -168,43 +168,46 @@ public class SwerveSubsystem extends SubsystemBase {
     public Command driveFieldOriented(Supplier<ChassisSpeeds> velocity) {
         return run(() -> {
             if (robotContainer.shouldAim()) {
-                swerveDrive.drive(new Translation2d(velocity.get().vxMetersPerSecond, velocity.get().vyMetersPerSecond), getTargetVelocity(), false, false);
+                aimAtHub(1, velocity);
             } else {
                 swerveDrive.driveFieldOriented(velocity.get());
             }
         });
     }
 
-    private double getTargetVelocity() {
-        double kP = .045;
+    // Copied
+    // https://github.com/Shenzhen-Robotics-Alliance/YAGSL-maple-sim/blob/main/src/main/java/frc/robot/subsystems/swervedrive/SwerveSubsystem.java#L69's
+    // homework
+    private void aimAtHub(double tolerance, Supplier<ChassisSpeeds> velocity) {
+        SwerveController controller = swerveDrive.getSwerveController();
 
-        double robotX = swerveDrive.getPose().getX();
-        double robotY = swerveDrive.getPose().getY();
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(velocity.get().vxMetersPerSecond,
+                velocity.get().vyMetersPerSecond,
+                controller.headingCalculate(getHeading().getRadians(),
+                        getHubYaw().getRadians()),
+                getHeading());
 
-        double[] limelightIMUData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("imu").getDoubleArray(new double[]{0.0});
-        double robotRotation = 0.0;
-        robotRotation = limelightIMUData[0] * (Math.PI / 180) - Math.PI;
+        if (Math.abs(getHubYaw().minus(getHeading()).getDegrees()) < tolerance)
+            speeds.omegaRadiansPerSecond = 0;
 
-        double hubX = SmartDashboard.getNumber("Hub X", 0.0);
-        double hubY = SmartDashboard.getNumber("Hub Y", 0.0);
+        drive(speeds);
+    }
 
-        double targetAngle = Math.atan2(hubY - robotY, hubX - robotX);
-        SmartDashboard.putNumber("Target Angle", targetAngle);
-        
-        //double targetingAngularVelocity = Math.atan2(Math.sin(targetAngle - robotRotation), Math.cos(targetAngle - robotRotation));
-        double targetingAngularVelocity = (targetAngle - robotRotation + Math.PI) % (2 * Math.PI) - Math.PI;
-        //targetingAngularVelocity = targetingAngularVelocity > 0 ? targetingAngularVelocity : -Math.PI + targetingAngularVelocity;
-        targetingAngularVelocity *= kP * swerveDrive.getMaximumChassisAngularVelocity();
+    public void drive(ChassisSpeeds velocity) {
+        swerveDrive.drive(velocity);
+    }
 
-        //Current 60 Target 30
-        // 30 - 60 = -30
-        // Current 60 Target -30
-        // (180 - -60) % 180 = 60.
+    private Rotation2d getHeading() {
+        return getPose().getRotation();
+    }
 
-        SmartDashboard.putNumber("Robot Rotation", robotRotation);
-        SmartDashboard.putNumber("Target Angular Velocity", targetingAngularVelocity);
-
-        return SmartDashboard.getNumber("velocity_test_input", 0.0);
+    private Rotation2d getHubYaw() {
+        // Taken from PhotonUtils.getYawToPose()
+        Pose3d speakerAprilTagPose = DriverStation.getAlliance().get() == Alliance.Blue
+                ? TargetConstants.BLUE_HUB_POSE3D
+                : TargetConstants.RED_HUB_POSE3D;
+        Translation2d relativeTrl = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
+        return new Rotation2d(relativeTrl.getX(), relativeTrl.getY()).plus(swerveDrive.getOdometryHeading());
     }
 
     // Required for PathPlanner
