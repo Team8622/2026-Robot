@@ -7,6 +7,7 @@ package frc.robot;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -35,6 +36,9 @@ public class Robot extends TimedRobot {
 	 */
 	public Robot() {
 		robotContainer = new RobotContainer();
+
+		//TODO: Check what data is logged by default, and add any fields you find to be necessarry.
+		DataLogManager.start();
 
 		if (isSimulation()) {
       		DriverStation.silenceJoystickConnectionWarning(true);
