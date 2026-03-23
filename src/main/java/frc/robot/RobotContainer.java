@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AnalogCommand;
@@ -48,9 +49,9 @@ public class RobotContainer {
             ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
     private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-            () -> driverController.getLeftY() * (driverController.rightTrigger().getAsBoolean() ? 0.25 : 1),
-            () -> driverController.getLeftX() * (driverController.rightTrigger().getAsBoolean() ? 0.25 : 1))
-            .withControllerRotationAxis(() -> driverController.getRightX())
+            () -> driverController.getLeftY() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1),
+            () -> driverController.getLeftX() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1))
+            .withControllerRotationAxis(() -> driverController.getRightX() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1))
             .deadband(ControllerConstants.DEADBAND)
             .scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
             .robotRelative(false)
