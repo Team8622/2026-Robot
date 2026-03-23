@@ -6,7 +6,8 @@
     "Start to Hub"
   ],
   "autoFolders": [
-    "Shoot and Intake",
+    "Shoot and Intake through Trench",
+    "Shoot and Intake through Ramp",
     "Shoot at Hub"
   ],
   "defaultMaxVel": 3.0,

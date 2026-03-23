@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Pathfind to Hub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Enable Shooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Disable Shooter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Cross Trench into Neutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Enable Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake in Neutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Disable Intake"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Shoot and Intake through Trench",
+  "choreoAuto": false
+}

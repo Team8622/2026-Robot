@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right to Hub"
+            "pathName": "Left to Hub"
           }
         },
         {
@@ -68,6 +68,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Shoot and Intake",
+  "folder": "Shoot and Intake through Ramp",
   "choreoAuto": false
 }
