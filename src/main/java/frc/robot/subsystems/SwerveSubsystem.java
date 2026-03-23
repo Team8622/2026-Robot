@@ -211,10 +211,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private Rotation2d getHubYaw() {
         // Taken from PhotonUtils.getYawToPose()
-        Pose3d speakerAprilTagPose = DriverStation.getAlliance().get() == Alliance.Blue
+        Pose3d hubAprilTagPose = DriverStation.getAlliance().get() == Alliance.Blue
                 ? TargetConstants.BLUE_HUB_POSE3D
                 : TargetConstants.RED_HUB_POSE3D;
-        Translation2d relativeTrl = speakerAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
+        Translation2d relativeTrl = hubAprilTagPose.toPose2d().relativeTo(getPose()).getTranslation();
         return new Rotation2d(relativeTrl.getX(), relativeTrl.getY()).plus(swerveDrive.getOdometryHeading());
     }
 
