@@ -45,7 +45,7 @@ public final class Constants {
 	public static class IntakeConstants {
 		// public static final int LEAD_MOTOR_CAN_ID = 13;
 		// public static final int FOLLOW_MOTOR_CAN_ID = 14;
-		public static final int LEAD_MOTOR_CAN_ID = 14;
+		public static final int LEAD_MOTOR_CAN_ID = 13;
 
 		public static final double FORWARD_SPEED = -0.5;
 		public static final double BACKWARD_SPEED = 0.5;
