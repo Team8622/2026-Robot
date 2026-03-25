@@ -11,9 +11,11 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -138,7 +140,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public void periodic() {
         try {
             limelight.getSettings()
-                .withRobotOrientation(new Orientation3d(swerveDrive.getGyroRotation3d(), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(0))))
+                .withRobotOrientation(new Orientation3d(swerveDrive.getGyroRotation3d(), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(swerveDrive.getGyro().getYawAngularVelocity().magnitude()))))
                 .save();
 
             SmartDashboard.putNumber("Robot X", swerveDrive.getPose().getX());
@@ -159,7 +161,8 @@ public class SwerveSubsystem extends SubsystemBase {
                 SmartDashboard.putNumber("Tag Ambiguity", poseEstimate.getAvgTagAmbiguity());
 
                 boolean isVision = false;
-                if (poseEstimate.avgTagDist < 4 && poseEstimate.tagCount > 0 && poseEstimate.getMinTagAmbiguity() < 0.3) {
+                if (poseEstimate.tagCount > 0 && poseEstimate.getMinTagAmbiguity() < 0.5) {
+                    swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(0.05, 0.05, 0.022));
                     swerveDrive.swerveDrivePoseEstimator.addVisionMeasurement(poseEstimate.pose.toPose2d(), poseEstimate.timestampSeconds);
                     isVision = true;
                 }
@@ -176,7 +179,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public Command driveFieldOriented(Supplier<ChassisSpeeds> velocity) {
         return run(() -> {
             if (robotContainer.shouldAim()) {
-                aimAtHub(1, velocity);
+                aimAtHub(5, velocity);
             } else {
                 swerveDrive.driveFieldOriented(velocity.get());
             }
@@ -194,9 +197,14 @@ public class SwerveSubsystem extends SubsystemBase {
                 controller.headingCalculate(getHeading().getRadians(),
                         getHubYaw().getRadians()),
                 getHeading());
-
+        
+        SmartDashboard.putNumber("Hub Aim Error (degrees)", Math.abs(getHubYaw().minus(getHeading()).getDegrees()));
         if (Math.abs(getHubYaw().minus(getHeading()).getDegrees()) < tolerance)
             speeds.omegaRadiansPerSecond = 0;
+        speeds.omegaRadiansPerSecond *= -1;
+        speeds.omegaRadiansPerSecond *= 2;
+
+        SmartDashboard.putNumber("Hub angular velocity Rad", speeds.omegaRadiansPerSecond);
 
         drive(speeds);
     }
@@ -207,6 +215,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private Rotation2d getHeading() {
         return getPose().getRotation();
+        //return swerveDrive.getOdometryHeading();
+        //return getLimelightPose().getRotation().toRotation2d();
     }
 
     private Rotation2d getHubYaw() {

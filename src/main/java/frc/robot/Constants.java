@@ -26,8 +26,8 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
 	public static class TargetConstants{
-		public static final Pose3d BLUE_HUB_POSE3D = new Pose3d(4.03,4,4.35, new Rotation3d());
-		public static final Pose3d RED_HUB_POSE3D = new Pose3d(12.51,4,4.35,new Rotation3d());
+		public static final Pose3d BLUE_HUB_POSE3D = new Pose3d(4.625,4.035,0, new Rotation3d());
+		public static final Pose3d RED_HUB_POSE3D = new Pose3d(11.915,4.035,0,new Rotation3d());
 	}
 
 	public static class SimulationConstants{
@@ -62,7 +62,7 @@ public final class Constants {
 		public static final double FORWARD_SPEED = 1;
 		public static final double BACKWARD_SPEED = -0.5;
 
-		public static final double SPEED_RATIO = 0.5;
+		public static final double SPEED_RATIO = 0.25;
 	}
 
 	public static class DriveConstants {
