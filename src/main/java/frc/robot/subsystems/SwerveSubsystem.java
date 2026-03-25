@@ -15,10 +15,10 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -50,6 +50,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private LimelightPoseEstimator poseEstimator;
     private final RobotContainer robotContainer;
 
+    private StructPublisher<Pose3d> robotPosePublisher;
+
     public SwerveSubsystem(RobotContainer robotContainer) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 
@@ -76,9 +78,8 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         this.robotContainer = robotContainer;
 
-        SmartDashboard.putNumber("Hub X", (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? 0 : 0);
-        SmartDashboard.putNumber("Hub Y", 2.91846);
-        SmartDashboard.putNumber("velocity_test_input", 0.0);
+        //Prepares publishes the robot pose publisher. The value is set in periodic.
+        robotPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Robot Pose", Pose3d.struct).publish();
 
         setupPathPlanner();
     }
@@ -145,6 +146,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
             SmartDashboard.putNumber("Robot X", swerveDrive.getPose().getX());
             SmartDashboard.putNumber("Robot Y", swerveDrive.getPose().getY());
+
+            //Setting the robots pose in network tables
+            robotPosePublisher.set(new Pose3d(getPose()));
 
             double[] limelightIMUData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("imu").getDoubleArray(new double[]{0.0});
             double robotRotation = limelightIMUData[0] * (Math.PI / 180) - Math.PI;
