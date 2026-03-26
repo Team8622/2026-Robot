@@ -12,6 +12,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -50,6 +51,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private Limelight limelight;
     private LimelightPoseEstimator poseEstimator;
     private final RobotContainer robotContainer;
+
+    private PIDController aimingPID = new PIDController(DriveConstants.AIMING_PID_KP,DriveConstants.AIMING_PID_KI,DriveConstants.AIMING_PID_KD);
 
     private StructPublisher<Pose3d> robotPosePublisher;
     private StructPublisher<Pose3d> limelightPosePublisher;
@@ -196,7 +199,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public Command driveFieldOriented(Supplier<ChassisSpeeds> velocity) {
         return run(() -> {
             if (robotContainer.shouldAim()) {
-                aimAtHub(5, velocity);
+                aimAtHub(DriveConstants.AIMING_TOLERANCE, velocity);
             } else {
                 swerveDrive.driveFieldOriented(velocity.get());
             }
@@ -221,6 +224,8 @@ public class SwerveSubsystem extends SubsystemBase {
         speeds.omegaRadiansPerSecond *= -1;
         speeds.omegaRadiansPerSecond *= 2;
 
+        speeds.omegaRadiansPerSecond = aimingPID.calculate(velocity.get().omegaRadiansPerSecond,speeds.omegaRadiansPerSecond);
+        
         SmartDashboard.putNumber("Hub angular velocity Rad", speeds.omegaRadiansPerSecond);
 
         drive(speeds);
@@ -268,9 +273,9 @@ public class SwerveSubsystem extends SubsystemBase {
     public void zeroGyroWithAlliance() {
         if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) {
             swerveDrive.zeroGyro();
-            swerveDrive.resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
         } else {
             swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
         }
     }
 

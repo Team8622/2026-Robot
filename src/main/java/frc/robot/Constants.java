@@ -70,6 +70,11 @@ public final class Constants {
 		public static final double SCALE_TRANSLATION = 0.8;
 		public static final double SLOW_SCALE = 0.25;
 
+		public static final double AIMING_PID_KP = 0.4;
+		public static final double AIMING_PID_KI = 0;
+		public static final double AIMING_PID_KD = 0;
+		public static final double AIMING_TOLERANCE = 5;
+
 		public static final Pose2d BLUE_STARTING_POSTIION = new Pose2d(new Translation2d(0,0), Rotation2d.fromDegrees(0));
         public static final Pose2d RED_STARTING_POSITION = new Pose2d(new Translation2d(0,0), Rotation2d.fromDegrees(180));
 	}
