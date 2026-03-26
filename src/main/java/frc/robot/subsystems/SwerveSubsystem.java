@@ -15,6 +15,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -51,6 +52,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private final RobotContainer robotContainer;
 
     private StructPublisher<Pose3d> robotPosePublisher;
+    private StructPublisher<Pose3d> limelightPosePublisher;
+    private StructPublisher<Pose3d> limelightOrbPosePublisher;
 
     public SwerveSubsystem(RobotContainer robotContainer) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -80,6 +83,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //Prepares publishes the robot pose publisher. The value is set in periodic.
         robotPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Robot Pose", Pose3d.struct).publish();
+
+        limelightPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Limelight Pose", Pose3d.struct).publish();
+
+        limelightOrbPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Limelight Orb Pose", Pose3d.struct).publish();
 
         setupPathPlanner();
     }
@@ -148,7 +155,13 @@ public class SwerveSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("Robot Y", swerveDrive.getPose().getY());
 
             //Setting the robots pose in network tables
-            robotPosePublisher.set(new Pose3d(getPose()));
+            Pose3d robotPose = new Pose3d(getPose().getX(),getPose().getY(),0,new Rotation3d(getHeading()));
+            
+            robotPosePublisher.set(robotPose);
+            limelightPosePublisher.set(getLimelightPose());
+            limelightOrbPosePublisher.set(getLimelightOrbPose());
+
+            SmartDashboard.putNumber("Heading Degrees", getHeading().getDegrees());
 
             double[] limelightIMUData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("imu").getDoubleArray(new double[]{0.0});
             double robotRotation = limelightIMUData[0] * (Math.PI / 180) - Math.PI;
@@ -259,5 +272,15 @@ public class SwerveSubsystem extends SubsystemBase {
         } else {
             swerveDrive.zeroGyro();
         }
+    }
+
+    private Pose3d getLimelightPose(){
+        double[] limelightData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose").getDoubleArray(new double[11]);
+        return new Pose3d(limelightData[0],limelightData[1],limelightData[2],new Rotation3d(Math.toRadians(limelightData[3]),Math.toRadians(limelightData[4]),Math.toRadians(limelightData[5])));
+    }
+
+    private Pose3d getLimelightOrbPose(){
+        double[] limelightData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_orb").getDoubleArray(new double[11]);
+        return new Pose3d(limelightData[0],limelightData[1],limelightData[2],new Rotation3d(Math.toRadians(limelightData[3]),Math.toRadians(limelightData[4]),Math.toRadians(limelightData[5])));
     }
 }
