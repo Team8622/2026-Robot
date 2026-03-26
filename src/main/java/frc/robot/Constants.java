@@ -70,7 +70,7 @@ public final class Constants {
 		public static final double SCALE_TRANSLATION = 0.8;
 		public static final double SLOW_SCALE = 0.25;
 
-		public static final double AIMING_PID_KP = 0.4;
+		public static final double AIMING_PID_KP = 0.8;
 		public static final double AIMING_PID_KI = 0;
 		public static final double AIMING_PID_KD = 0;
 		public static final double AIMING_TOLERANCE = 5;
