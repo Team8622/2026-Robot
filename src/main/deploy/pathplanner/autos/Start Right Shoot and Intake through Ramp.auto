@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left to Hub"
+            "pathName": "Right to Hub"
           }
         },
         {
@@ -55,7 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Intake in Neutral"
+            "pathName": "Intake Right to Left in Neutral"
           }
         },
         {

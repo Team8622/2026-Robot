@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right to Hub"
+            "pathName": "Center to Hub"
           }
         },
         {
@@ -31,7 +31,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Cross Trench into Neutral"
+            "pathName": "Navigate Behind Ramp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Cross Ramp into Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Line up Intake in Neutral"
           }
         },
         {
@@ -43,7 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Intake in Neutral"
+            "pathName": "Intake Right to Left in Neutral"
           }
         },
         {
@@ -56,6 +68,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Shoot and Intake through Trench",
+  "folder": "Shoot and Intake through Ramp",
   "choreoAuto": false
 }

@@ -12,20 +12,20 @@
         "y": 2.0
       },
       "isLocked": false,
-      "linkedName": "Lined Up Intake"
+      "linkedName": "Lined Up Intake Right"
     },
     {
       "anchor": {
         "x": 8.25,
-        "y": 6.9394382022471905
+        "y": 7.1
       },
       "prevControl": {
         "x": 8.25,
-        "y": 6.6894382022471905
+        "y": 6.85
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Lined Up Intake Left"
     }
   ],
   "rotationTargets": [],
