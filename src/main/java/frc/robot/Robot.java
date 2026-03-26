@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.SimulationConstants;
 import swervelib.SwerveDrive;
 
@@ -43,6 +44,13 @@ public class Robot extends TimedRobot {
 		if (isSimulation()) {
       		DriverStation.silenceJoystickConnectionWarning(true);
     	}
+
+		if (isSimulation()){
+			simPositionInit(robotContainer.getSwerveSubSystem().getSwerveDrive());
+		}
+		else{
+			realPositionInit(robotContainer.getSwerveSubSystem().getSwerveDrive());
+		}
 
 		// visionThread = new Thread(
 		// 	() -> {
@@ -131,10 +139,6 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
-
-		if (isSimulation()){
-			simPositionInit(robotContainer.getSwerveSubSystem().getSwerveDrive());
-		}
 	}
 
 	public void simPositionInit(SwerveDrive swerveDrive){
@@ -147,6 +151,16 @@ public class Robot extends TimedRobot {
             swerveDrive.resetOdometry(SimulationConstants.BLUE_SIM_STARTING_POSTIION);
         }
     }
+
+	public void realPositionInit(SwerveDrive swerveDrive){
+		if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) {
+            swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(DriveConstants.RED_STARTING_POSITION);
+        } else {
+            swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(DriveConstants.BLUE_STARTING_POSTIION);
+        }
+	}
 
 	/** This function is called periodically during operator control. */
 	@Override

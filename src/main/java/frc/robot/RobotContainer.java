@@ -55,7 +55,7 @@ public class RobotContainer {
             .deadband(ControllerConstants.DEADBAND)
             .scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
             .robotRelative(false)
-            .allianceRelativeControl(false);
+            .allianceRelativeControl(true);
 
     private final Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
 
