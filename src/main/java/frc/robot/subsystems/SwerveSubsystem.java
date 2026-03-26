@@ -273,9 +273,9 @@ public class SwerveSubsystem extends SubsystemBase {
     public void zeroGyroWithAlliance() {
         if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) {
             swerveDrive.zeroGyro();
+            swerveDrive.resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
         } else {
             swerveDrive.zeroGyro();
-            swerveDrive.resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
         }
     }
 
