@@ -77,6 +77,6 @@ public final class Constants {
 	}
 
 	public static class LimelightConstants{
-		public static final Pose3d LIMELIGHT_POSITION = new Pose3d(0.1460,0,0.4953,new Rotation3d(0,0,Math.toRadians(180)));
+		public static final Pose3d LIMELIGHT_POSITION = new Pose3d(-0.1460,0,0.4953,new Rotation3d(0,0,Math.toRadians(0)));
 	}
 }
