@@ -148,7 +148,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public void periodic() {
         try {
             limelight.getSettings()
-                .withRobotOrientation(new Orientation3d(swerveDrive.getGyroRotation3d(), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(swerveDrive.getGyro().getYawAngularVelocity().magnitude()))))
+                .withRobotOrientation(new Orientation3d(new Rotation3d(swerveDrive.getPose().getRotation()), new AngularVelocity3d(DegreesPerSecond.of(0), DegreesPerSecond.of(0), DegreesPerSecond.of(swerveDrive.getGyro().getYawAngularVelocity().magnitude()))))
                 .save();
 
             SmartDashboard.putNumber("Robot X", swerveDrive.getPose().getX());
