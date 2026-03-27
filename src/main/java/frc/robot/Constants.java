@@ -75,7 +75,7 @@ public final class Constants {
 		public static final double AIMING_PID_KD = 0;
 		public static final double AIMING_TOLERANCE = 2;
 
-		public static final Pose2d BLUE_STARTING_POSTIION = new Pose2d(new Translation2d(0,0), Rotation2d.fromDegrees(0));
+		public static final Pose2d BLUE_STARTING_POSTIION = new Pose2d(new Translation2d(3.550,4.000), Rotation2d.fromDegrees(0));
         public static final Pose2d RED_STARTING_POSITION = new Pose2d(new Translation2d(0,0), Rotation2d.fromDegrees(180));
 	}
 
