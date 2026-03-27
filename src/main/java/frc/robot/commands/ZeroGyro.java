@@ -17,9 +17,9 @@ public class ZeroGyro extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+  // Called repeatedly while the command is active.
   @Override
-  public void initialize() {
+  public void execute() {
     m_swerve.zeroGyroWithAlliance();
   }
 }
