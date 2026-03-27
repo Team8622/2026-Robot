@@ -67,7 +67,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Shoot and Intake through Ramp",
   "choreoAuto": false
 }

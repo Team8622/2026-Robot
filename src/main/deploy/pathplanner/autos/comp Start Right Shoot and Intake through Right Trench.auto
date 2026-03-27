@@ -55,7 +55,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Shoot and Intake through Right Trench",
   "choreoAuto": false
 }
