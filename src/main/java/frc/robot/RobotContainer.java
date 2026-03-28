@@ -49,9 +49,9 @@ public class RobotContainer {
             ControllerConstants.OPERATOR_CONTROLLER_PORT);
 
     private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-            () -> driverController.getLeftY() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1),
-            () -> driverController.getLeftX() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1))
-            .withControllerRotationAxis(() -> driverController.getRightX() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1))
+            () -> -driverController.getLeftY() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1),
+            () -> -driverController.getLeftX() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1))
+            .withControllerRotationAxis(() -> -driverController.getRightX() * (driverController.rightTrigger().getAsBoolean() ? DriveConstants.SLOW_SCALE : 1))
             .deadband(ControllerConstants.DEADBAND)
             .scaleTranslation(Constants.DriveConstants.SCALE_TRANSLATION)
             .robotRelative(false)
