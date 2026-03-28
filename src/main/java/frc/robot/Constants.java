@@ -69,6 +69,7 @@ public final class Constants {
 		public static final double MAX_SPEED = Units.feetToMeters(10);
 		public static final double SCALE_TRANSLATION = 0.8;
 		public static final double SLOW_SCALE = 0.25;
+		public static final double FAST_SCALE = 3;
 
 		public static final double AIMING_PID_KP = 1;
 		public static final double AIMING_PID_KI = 0;
