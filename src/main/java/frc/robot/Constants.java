@@ -26,7 +26,8 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
 	public static class TargetConstants{
-		public static final Pose3d HUB_POSE3D = new Pose3d(4.625,4.035,0, new Rotation3d());
+		public static final Pose3d BLUE_HUB_POSE3D = new Pose3d(4.625,4.035,0, new Rotation3d());
+		public static final Pose3d RED_HUB_POSE3D = new Pose3d(11.915,4.035,0,new Rotation3d());
 	}
 
 	public static class SimulationConstants{
