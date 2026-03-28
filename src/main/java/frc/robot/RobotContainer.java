@@ -9,7 +9,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -21,6 +20,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.TargetConstants;
 import frc.robot.commands.AnalogCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.ZeroGyro;
@@ -87,7 +87,7 @@ public class RobotContainer {
                 new AnalogCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED, true));
         NamedCommands.registerCommand("Disable Intake", new AnalogCommand(intakeSubsystem, 0, true));
 
-        Pose2d hubShootingPointTargetPose = (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? (new Pose2d(13.54, 4, Rotation2d.fromDegrees(180))) : ((new Pose2d(3, 4, Rotation2d.fromDegrees(0))));
+        Pose2d hubShootingPointTargetPose = (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? TargetConstants.RED_HUB_POSE3D.toPose2d() : TargetConstants.BLUE_HUB_POSE3D.toPose2d();
 
         PathConstraints basicConstraints = new PathConstraints(
                 3.0, 4.0,
