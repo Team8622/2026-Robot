@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 3.55,
-        "y": 6.0
+        "y": 2.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.433298465099022,
-        "y": 5.564331811529621
+        "x": 2.55,
+        "y": 2.0
       },
       "isLocked": false,
-      "linkedName": "Left Start"
+      "linkedName": "Right Start"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 4.0
+        "x": 2.0,
+        "y": 3.0
       },
       "prevControl": {
-        "x": 3.101410584547651,
-        "y": 4.3496525140247195
+        "x": 3.0,
+        "y": 3.0
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Hub Shooting Point"
+      "linkedName": "Turned Towards Hub Right "
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 20.0
   },
   "reversed": false,
-  "folder": "Start to Hub",
+  "folder": "Start Turn to Hub",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
