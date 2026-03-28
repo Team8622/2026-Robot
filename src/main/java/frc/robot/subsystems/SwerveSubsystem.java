@@ -6,6 +6,8 @@ import java.io.File;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import org.dyn4j.UnitConversion;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -192,8 +194,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //Outputting the distance from the hub on smartdashboard
         Pose2d hubPose = (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? TargetConstants.RED_HUB_POSE3D.toPose2d() : TargetConstants.BLUE_HUB_POSE3D.toPose2d();
-        double distanceFromHub = getPose().getTranslation().getDistance(hubPose.getTranslation());
-        SmartDashboard.putNumber("Distance from Hub", distanceFromHub);
+        double distanceFromHub = UnitConversion.metersToFeet(getPose().getTranslation().getDistance(hubPose.getTranslation()));
+        SmartDashboard.putNumber("Distance from Hub (feet)", distanceFromHub);
     }
 
     /**
