@@ -57,8 +57,6 @@ public class SwerveSubsystem extends SubsystemBase {
     private PIDController aimingPID = new PIDController(DriveConstants.AIMING_PID_KP,DriveConstants.AIMING_PID_KI,DriveConstants.AIMING_PID_KD);
 
     private StructPublisher<Pose3d> robotPosePublisher;
-    private StructPublisher<Pose3d> limelightPosePublisher;
-    private StructPublisher<Pose3d> limelightOrbPosePublisher;
 
     public SwerveSubsystem(RobotContainer robotContainer) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -88,10 +86,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //Prepares publishes the robot pose publisher. The value is set in periodic.
         robotPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Robot Pose", Pose3d.struct).publish();
-
-        limelightPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Limelight Pose", Pose3d.struct).publish();
-
-        limelightOrbPosePublisher = NetworkTableInstance.getDefault().getStructTopic("Limelight Orb Pose", Pose3d.struct).publish();
 
         setupPathPlanner();
     }
@@ -163,8 +157,6 @@ public class SwerveSubsystem extends SubsystemBase {
             Pose3d robotPose = new Pose3d(getPose().getX(),getPose().getY(),0,new Rotation3d(getHeading()));
             
             robotPosePublisher.set(robotPose);
-            limelightPosePublisher.set(getLimelightPose());
-            limelightOrbPosePublisher.set(getLimelightOrbPose());
 
             SmartDashboard.putNumber("Heading Degrees", getHeading().getDegrees());
 
@@ -281,15 +273,5 @@ public class SwerveSubsystem extends SubsystemBase {
         } else {
             swerveDrive.zeroGyro();
         }
-    }
-
-    private Pose3d getLimelightPose(){
-        double[] limelightData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose").getDoubleArray(new double[11]);
-        return new Pose3d(limelightData[0],limelightData[1],limelightData[2],new Rotation3d(Math.toRadians(limelightData[3]),Math.toRadians(limelightData[4]),Math.toRadians(limelightData[5])));
-    }
-
-    private Pose3d getLimelightOrbPose(){
-        double[] limelightData = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_orb").getDoubleArray(new double[11]);
-        return new Pose3d(limelightData[0],limelightData[1],limelightData[2],new Rotation3d(Math.toRadians(limelightData[3]),Math.toRadians(limelightData[4]),Math.toRadians(limelightData[5])));
     }
 }
