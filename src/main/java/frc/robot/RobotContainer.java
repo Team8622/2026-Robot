@@ -99,15 +99,13 @@ public class RobotContainer {
                 basicConstraints,
                 0.0
         );
-        NamedCommands.registerCommand("Pathfind to Hub", pathfindingCommand );
+        NamedCommands.registerCommand("Pathfind to Hub", pathfindingCommand);
 
     }
 
     private void configureBindings() {
-        operatorController.rightTrigger()
-                .whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
-        operatorController.rightBumper()
-                .whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
+        operatorController.rightTrigger().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
+        operatorController.rightBumper().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
 
         operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
         operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
