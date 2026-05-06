@@ -220,8 +220,6 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Hub Aim Error (degrees)", Math.abs(getHubYaw().minus(getHeading()).getDegrees()));
         if (Math.abs(getHubYaw().minus(getHeading()).getDegrees()) < tolerance)
             speeds.omegaRadiansPerSecond = 0;
-        speeds.omegaRadiansPerSecond *= -1;
-        speeds.omegaRadiansPerSecond *= 2;
 
         speeds.omegaRadiansPerSecond = aimingPID.calculate(velocity.get().omegaRadiansPerSecond,speeds.omegaRadiansPerSecond);
         
